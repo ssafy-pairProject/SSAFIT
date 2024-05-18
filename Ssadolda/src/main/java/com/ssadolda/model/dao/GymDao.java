@@ -20,5 +20,6 @@ public List<Gym> selectAllGym();
 public Gym detailGym(int gymSeq);
 
 public List<Gym> arrayGym();
-	
+
+
 }

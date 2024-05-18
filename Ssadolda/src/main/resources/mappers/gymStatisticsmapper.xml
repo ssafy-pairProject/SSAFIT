@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssadolda.model.dao.GymStatisticsDao">
+
+  <select id="getGymStatistics" parameterType="int" resultType="GymStatistics">
+    SELECT 
+        gymSeq, 
+        totalViewCount,
+        averageRating,
+        reviewCount,
+        totalLikeCount
+    FROM 
+        gymStatistics
+    WHERE 
+        gymSeq = #{gymSeq}
+  </select>
+
+  <!-- 특정 헬스장의 평점 통계 및 조회수, 좋아요 수 업데이트 -->
+  <update id="updateGymStatistics" parameterType="GymStatistics">
+    UPDATE gymStatistics
+    SET 
+        totalViewCount = #{totalViewCount},
+        averageRating = #{averageRating},
+        reviewCount = #{reviewCount},
+        totalLikeCount = #{totalLikeCount}
+    WHERE 
+        gymSeq = #{gymSeq}
+  </update>
+  
+   <update id="incrementViewCount" parameterType="int">
+        UPDATE gymStatistics 
+        SET totalViewCount = totalViewCount + 1 
+        WHERE gymSeq = #{gymSeq}
+    </update>
+
+</mapper>
