@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.ssadolda.model.dao.GymDao;
+import com.ssadolda.model.dao.GymStatisticsDao;
 import com.ssadolda.model.dto.Gym;
 
 import lombok.RequiredArgsConstructor;
@@ -13,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 public class GymBoardServiceImpl implements GymBoardService {
 
 	private final GymDao gymdao;
-	
+	private final GymStatisticsDao gymstatisticdao;
 	@Override
 	public int registGym(Gym gym) {
 		return gymdao.insertGym(gym);
@@ -50,5 +51,9 @@ public class GymBoardServiceImpl implements GymBoardService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	@Override
+	  public void incrementViewCount(int gymSeq) {
+	        gymstatisticdao.incrementViewCount(gymSeq); // 조회수 증가 로직 호출
+	    }
 
 }

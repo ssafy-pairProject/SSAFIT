@@ -29,5 +29,9 @@ public interface GymBoardService {
 	// 헬스장 정렬
 	
 	public List<Gym> arrayGym();
+	
+	//헬스장 조회수 증가
+	
+	void incrementViewCount(int gymSeq);
 
 }

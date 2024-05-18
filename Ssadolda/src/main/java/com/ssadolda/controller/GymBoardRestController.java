@@ -92,6 +92,7 @@ public class GymBoardRestController {
 	public ResponseEntity<?> detailGym(@PathVariable int gymSeq){
 		try {
 			Gym gym = gymboardservice.gymDetail(gymSeq);
+			gymboardservice.incrementViewCount(gymSeq);
 			if(gym!=null) 
 			return new ResponseEntity<Gym>(gym, HttpStatus.OK);
 			else {
@@ -101,7 +102,6 @@ public class GymBoardRestController {
 		} catch (Exception e) {
 			return exceptionHandling(e);
 		}
-		
 	}
 
 	private ResponseEntity<String> exceptionHandling(Exception e) {

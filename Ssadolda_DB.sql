@@ -4,6 +4,7 @@ CREATE DATABASE `ssadolda_db` DEFAULT CHARACTER SET utf8mb4;
 
 use ssadolda_db;
 drop table users;
+
 create table users(
 `userId` varchar(12) unique,
 `password` varchar(20) not null,
@@ -21,15 +22,51 @@ CREATE TABLE gyms(
 `gymAddress` varchar(50) not null,
 `gymPhoneNumber` varchar(15) ,
 `gymPrice` varchar(10),
-`gymIntroduce` varchar(1000),
+`gymIntroduce` TEXT,
 `gymImg` varchar(200),
 `gymOperatingHours` varchar(100),
 `gymAmenities` varchar(300),
 `gymAdditionalService` varchar(300),
+`userLikeCnt` int default 0,
+`gymviews` int	default 0,
 `gymSeq` INT AUTO_INCREMENT PRIMARY KEY
 );
 
+CREATE TABLE gymlikebtn (
+  `userSeq` INT NOT NULL,
+  `gymSeq` INT NOT NULL,
+  `likeDate` DATE NULL,
+  `likeOk` int,
+  FOREIGN KEY (`userSeq`) REFERENCES `users`(`userSeq`) ON DELETE CASCADE,
+  FOREIGN KEY (`gymSeq`) REFERENCES `gyms`(`gymSeq`) ON DELETE CASCADE
+);
 
-    select *
-    from gyms;
-    
+CREATE TABLE gymreviews (
+  `reviewSeq` INT AUTO_INCREMENT PRIMARY KEY,
+  `userSeq` INT NOT NULL,
+  `gymSeq` INT NOT NULL,
+  `reviewDate` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `rating` INT NOT NULL,
+  `comment` TEXT,
+  FOREIGN KEY (`userSeq`) REFERENCES `users`(`userSeq`) ON DELETE CASCADE,
+  FOREIGN KEY (`gymSeq`) REFERENCES `gyms`(`gymSeq`) ON DELETE CASCADE,
+  CHECK (`rating` >= 1 AND `rating` <= 5), -- 평점 범위 체크
+  INDEX `idx_userSeq` (`userSeq`),
+  INDEX `idx_gymSeq` (`gymSeq`)
+);	
+
+CREATE TABLE gymStatistics (
+    gymSeq INT NOT NULL,
+    totalViewCount INT DEFAULT 0,
+    averageRating DOUBLE DEFAULT 0,
+    reviewCount INT DEFAULT 0,
+    totalLikeCount INT DEFAULT 0,
+    PRIMARY KEY (gymSeq),
+    FOREIGN KEY (gymSeq) REFERENCES gyms(gymSeq) ON DELETE CASCADE
+);
+  
+  
+
+
+
+ 
