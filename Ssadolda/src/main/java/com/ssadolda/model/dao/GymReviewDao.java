@@ -14,6 +14,10 @@ public interface GymReviewDao {
 	public int deleteGymReview(int reveiwSeq);
 
 	public List<GymReview> selectAllGymReviews(int gymSeq);
+	
+	public GymReview selectGymReviewsByReviewSeq(int reveiwSeq);
 
-
+	void increaseTotalRate (GymReview gym);
+	
+	void decreaseTotalRate (int decreaseRating);
 }

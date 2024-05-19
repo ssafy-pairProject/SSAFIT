@@ -14,6 +14,7 @@ create table users(
 `nickname` varchar(20) not null,
 `img` varchar(200) ,
 `orgimg` varchar(200),
+`userRole` varchar(20) default 'role_user',
 `userSeq` int AUTO_INCREMENT PRIMARY KEY
 );
 
@@ -32,11 +33,11 @@ CREATE TABLE gyms(
 `gymSeq` INT AUTO_INCREMENT PRIMARY KEY
 );
 
-CREATE TABLE gymlikebtn (
+CREATE TABLE gymlike (
   `userSeq` INT NOT NULL,
   `gymSeq` INT NOT NULL,
-  `likeDate` DATE NULL,
-  `likeOk` int,
+  `likeSeq` INT AUTO_INCREMENT PRIMARY KEY ,
+
   FOREIGN KEY (`userSeq`) REFERENCES `users`(`userSeq`) ON DELETE CASCADE,
   FOREIGN KEY (`gymSeq`) REFERENCES `gyms`(`gymSeq`) ON DELETE CASCADE
 );

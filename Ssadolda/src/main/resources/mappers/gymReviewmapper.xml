@@ -9,8 +9,26 @@
 
 <insert id="insertGymReview" parameterType="GymReview">
 INSERT INTO gymreviews(userSeq,gymSeq,rating,comment,reviewDate)
-VALUES(#{userSeq},#{gymSeq},#{rating},#{comment},CURRENT_TIMESTAMP)
+VALUES(#{userSeq},#{gymSeq},#{rating},#{comment},CURRENT_TIMESTAMP);
 </insert>
+
+<update id="increaseTotalRate" parameterType="int">
+UPDATE gymStatistics
+SET averageRating = averageRating+ #{rating}
+WHERE gymSeq=#{gymSeq}
+</update>
+
+<update id="decreaseTotalRate" parameterType="int">
+UPDATE gymStatistics
+SET averageRating = averageRating-#{rating}
+WHERE gymSeq=#{gymSeq}
+</update>
+
+<select id="selectGymReviewsByReviewSeq" parameterType="int" resultType="GymReview">
+SELECT *
+FROM gymreviews
+WHERE reviewSeq=#{reviewSeq}
+</select>
 
 <select id="selectAllGymReviews" parameterType="int" resultType="GymReview">
 SELECT *

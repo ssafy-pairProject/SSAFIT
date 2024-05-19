@@ -5,10 +5,17 @@
 
 <mapper namespace="com.ssadolda.model.dao.GymDao">
 
-<insert id="insertGym" parameterType="Gym">
+<insert id="insertGym" parameterType="Gym" useGeneratedKeys="true" keyProperty="gymSeq">
 INSERT INTO gyms(gymName,gymAddress,gymPhoneNumber,gymPrice,gymIntroduce,gymImg,gymOperatingHours,gymAmenities,gymAdditionalService)
-VALUES(#{gymName},#{gymAddress},#{gymPhoneNumber},#{gymPrice},#{gymIntroduce},#{gymImg},#{gymOperatingHours},#{gymAmenities},#{gymAdditionalService})
+VALUES(#{gymName},#{gymAddress},#{gymPhoneNumber},#{gymPrice},#{gymIntroduce},#{gymImg},#{gymOperatingHours},#{gymAmenities},#{gymAdditionalService});
 </insert>
+
+<insert id="insertGymStatistics" parameterType="int">
+    INSERT INTO gymStatistics (gymSeq)
+    VALUES(#{gymSeq});
+</insert>
+
+
 
 <select id="selectAllGym" resultType="Gym">
 SELECT*

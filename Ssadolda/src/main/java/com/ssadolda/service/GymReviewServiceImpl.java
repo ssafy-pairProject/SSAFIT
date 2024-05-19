@@ -16,11 +16,14 @@ public class GymReviewServiceImpl implements GymReviewService {
 	private final GymReviewDao gymrreviewdao;
 	@Override
 	public int registGymReview(GymReview gymreview) {
+		//레이팅 총점 더해줌 
+		gymrreviewdao.increaseTotalRate(gymreview);
 		return gymrreviewdao.insertGymReview(gymreview);
 	}
 
 	@Override
 	public int deleteGymReview(int reviewSeq) {
+	
 		return gymrreviewdao.deleteGymReview(reviewSeq);
 	}
 

@@ -11,5 +11,10 @@ public interface GymStatisticsDao {
     void updateGymStatistics(GymStatistics gymStatistics);
     
     void incrementViewCount(int gymSeq);
+    
+	void incrementLike(int gymSeq);
+	
+	void decreaseLike(int gymSeq);
+
 	
 }

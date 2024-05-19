@@ -17,6 +17,10 @@
     WHERE 
         gymSeq = #{gymSeq}
   </select>
+  
+  <insert id="">
+  
+  </insert>
 
   <!-- 특정 헬스장의 평점 통계 및 조회수, 좋아요 수 업데이트 -->
   <update id="updateGymStatistics" parameterType="GymStatistics">
@@ -35,5 +39,22 @@
         SET totalViewCount = totalViewCount + 1 
         WHERE gymSeq = #{gymSeq}
     </update>
+    
+    
+    <!--  좋아요 증가 감소 -->
+    
+    <update id="incrementLike" parameterType="int">
+    UPDATE gymStatistics
+    SET totalLikeCount = totalLikeCount + 1
+    WHERE gymSeq = #{gymSeq}
+    </update>
+    
+        <update id="decreaseLike" parameterType="int">
+    UPDATE gymStatistics
+    SET totalLikeCount = totalLikeCount - 1
+    WHERE gymSeq = #{gymSeq}
+    </update>
+    
+    
 
 </mapper>

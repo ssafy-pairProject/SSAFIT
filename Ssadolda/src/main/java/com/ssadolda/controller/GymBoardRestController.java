@@ -37,6 +37,11 @@ public class GymBoardRestController {
 			return new ResponseEntity<List<Gym>>( gym,HttpStatus.OK);
 		
 	}
+	//헬스장 리뷰 평점 평균? 
+	// gymstatistic에 저장해야됨?
+	// averageRating에 리뷰 등록 마다점수를 더함 (또 리뷰 삭제시에 점수 빼줘야함)
+	// 그다음에 해당 헬스장 리뷰 갯수로 나누면 될거같음.
+	
 
 	// 헬스장 등록
 	// 관리자 권한 나중에추가

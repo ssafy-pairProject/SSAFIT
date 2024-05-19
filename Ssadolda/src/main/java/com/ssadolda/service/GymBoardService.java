@@ -22,16 +22,18 @@ public interface GymBoardService {
 	
 	public Gym gymDetail(int gymSeq);
 	
-	// 찜 버튼
+	// 찜 버튼 다른곳에 구현
 	
 	public int gymLikeBtn();
 	
-	// 헬스장 정렬
+	// 헬스장 조회수, 좋아요수 조건부 정렬 미구현 
 	
 	public List<Gym> arrayGym();
 	
 	//헬스장 조회수 증가
 	
 	void incrementViewCount(int gymSeq);
+	
+	int insertGymStatistics(int gymSeq);
 
 }
