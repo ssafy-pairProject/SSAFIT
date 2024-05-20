@@ -29,7 +29,7 @@
 	
 	<update id = "modifyUser" parameterType="User">
 		UPDATE users
-		SET name = #{name},password=#{password},nickname=#{nickname},phoneNumber=#{phoneNumber}img=#{img}
+		SET name = #{name},password=#{password},nickname=#{nickname},phoneNumber=#{phoneNumber},img=#{img}
 		WHERE userId = #{userId}
 	</update>
 	
@@ -44,7 +44,7 @@
         WHERE userSeq = #{userSeq}
     </update>
     
-    	<select id="selectId" resultType="boolean">
+    <select id="selectId" resultType="boolean">
 		SELECT COUNT(*)
 		  FROM users
 		 WHERE userId = #{userId}

@@ -61,8 +61,13 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public boolean selectId(String userId) {
-		log.info("Service :: selectId...................");
+		log.info("Service :: selectId.....");
 		return userdao.selectId(userId);
+	}
+	
+	@Override
+	public User selectUserBySeq (int userSeq) {
+		return userdao.selectUserByUserSeq(userSeq);
 	}
 	
 

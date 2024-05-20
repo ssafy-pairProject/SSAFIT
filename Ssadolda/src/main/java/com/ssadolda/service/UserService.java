@@ -32,5 +32,7 @@ public interface UserService {
 	
 	// 회원 중복 체크
 	boolean selectId(String userId);
+
+	User selectUserBySeq(int userSeq);
 	
 }

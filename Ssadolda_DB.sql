@@ -3,7 +3,7 @@ DROP DATABASE IF EXISTS `ssadolda_db`;
 CREATE DATABASE `ssadolda_db` DEFAULT CHARACTER SET utf8mb4;
 
 use ssadolda_db;
-drop table users;
+
 
 create table users(
 `userId` varchar(12) unique,
@@ -65,8 +65,36 @@ CREATE TABLE gymStatistics (
     PRIMARY KEY (gymSeq),
     FOREIGN KEY (gymSeq) REFERENCES gyms(gymSeq) ON DELETE CASCADE
 );
-  
-  
+
+INSERT INTO users (userId,`password`,email,phoneNumber,name,nickname)
+values ('ssafy1',1234,'ssafy1@naver.com','010-1111-1111','일싸피','로이더');
+
+
+INSERT INTO gyms(gymName,gymAddress,gymPhoneNumber,gymPrice,gymIntroduce,gymOperatingHours,gymAmenities,gymAdditionalService)
+VALUES('M휘트니스','유성구 봉명동','010-1234-5678',70000,'봉명에서 제일큰 헬스장!','24시간 영업','필라테스기구','wqe');
+INSERT INTO gymStatistics (gymSeq)
+VALUES(1);
+
+INSERT INTO gyms(gymName,gymAddress,gymPhoneNumber,gymPrice,gymIntroduce,gymOperatingHours,gymAmenities,gymAdditionalService)
+VALUES('투모어 휘트니스','유성구 학하로','0507-1358-3050',40000,'한밭대 최고 헬스장 무조건 빠져요!','06시30분~18시','PT전문','운동복 제공, 주차비무료');
+INSERT INTO gymStatistics (gymSeq)
+VALUES(2);
+
+select *
+from users;
+
+select *
+from gymlike;
+
+select *
+from gymreviews;
+
+select *
+from gymStatistics;
+
+
+
+
 
 
 
