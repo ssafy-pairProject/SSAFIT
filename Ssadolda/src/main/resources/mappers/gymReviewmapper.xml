@@ -9,8 +9,45 @@
 
 <insert id="insertGymReview" parameterType="GymReview">
 INSERT INTO gymreviews(userSeq,gymSeq,rating,comment,reviewDate)
-VALUES(#{userSeq},#{gymSeq},#{rating},#{comment},CURRENT_TIMESTAMP)
+VALUES(#{userSeq},#{gymSeq},#{rating},#{comment},CURRENT_TIMESTAMP);
 </insert>
+
+<update id="increaseGymReview" parameterType="GymReview">
+UPDATE gymStatistics
+SET reviewCount = reviewCount+1
+WHERE gymSeq=#{gymSeq}
+</update>
+
+<update id="decreaseGymReview" parameterType="int">
+UPDATE gymStatistics
+SET reviewCount = reviewCount-1
+WHERE gymSeq=#{gymSeq}
+</update>
+
+<update id="increaseTotalRate" parameterType="int">
+UPDATE gymStatistics
+SET averageRating = averageRating+ #{rating}
+WHERE gymSeq=#{gymSeq}
+</update>
+
+<select id="getDecreaseRate" parameterType="int" resultType="int">
+SELECT *
+FROM gymreviews
+WHERE reviewSeq= #{reviewSeq}
+</select>
+
+<select id="getGymSeqByReviewSeq" parameterType="int" resultType="int">
+SELECT gymreviews.gymSeq
+FROM gymreviews
+WHERE reviewSeq= #{reviewSeq}
+
+</select>
+
+<select id="selectGymReviewsByReviewSeq" parameterType="int" resultType="GymReview">
+SELECT *
+FROM gymreviews
+WHERE reviewSeq=#{reviewSeq}
+</select>
 
 <select id="selectAllGymReviews" parameterType="int" resultType="GymReview">
 SELECT *
@@ -22,5 +59,12 @@ WHERE gymSeq=#{gymSeq}
 DELETE FROM gymreviews
 where reviewSeq=#{reviewSeq}
 </delete>
+
+<update id="decreaseTotalRate"  parameterType="map" >
+UPDATE gymStatistics
+SET averageRating = averageRating- #{decreaseRating}
+WHERE gymSeq= #{gymSeq}
+</update>
+
 
 </mapper>

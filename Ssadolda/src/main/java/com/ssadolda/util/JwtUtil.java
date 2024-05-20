@@ -3,6 +3,7 @@ package com.ssadolda.util;
 import java.nio.charset.StandardCharsets;
 
 
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -34,6 +35,10 @@ public class JwtUtil {
 				.signWith(Keys.hmacShaKeyFor(SALT.getBytes(StandardCharsets.UTF_8)))// 서명완료
 				.compact();
 	}
+	
+	// Jwt로 인증 정보 조회
+//	public Authentication
+	
 	// 유효성 검사
 	public void valid (String token)throws Exception{
 //		Jwts.parser().setSigningKey(SALT.getBytes("UTF-8")).parseClaimsJws(token);

@@ -21,5 +21,7 @@ public Gym detailGym(int gymSeq);
 
 public List<Gym> arrayGym();
 
+public int insertGymStatistics(int gymSeq);
+
 
 }

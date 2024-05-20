@@ -1,13 +1,18 @@
 package com.ssadolda.controller;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpStatus;
 
 
@@ -31,6 +36,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -42,28 +48,49 @@ public class UserRestController {
 
 	private final UserService userservice;
 	private final JwtUtil jwtUtil = new JwtUtil();
-	private final ResourceLoader resLoader;
+	
+	@Value("${fileupload.upload.path}")
+	private String uploadPath;
 
-public UserRestController (UserService userservice,ResourceLoader resLoader) {
+public UserRestController (UserService userservice) {
 	this.userservice=userservice;
-	this.resLoader=resLoader;
 }
 	
 
 // 회원가입
 @PostMapping("/signup")
-public ResponseEntity<?> signup(@RequestBody User user, HttpSession session) {
+public ResponseEntity<?> signup(@RequestBody User user, HttpSession session,@RequestPart("img") MultipartFile file) throws IllegalStateException, IOException {
+	
 	if(userservice.selectId(user.getUserId())) {
 		return new ResponseEntity<String>("이미 존재하는 아이디 입니다!",HttpStatus.BAD_REQUEST);
 	}
 	int result =userservice.registUser(user);
-	String msg="";
-	if(result==1) {
-		msg = "회원가입에 성공했습니다!";
-		return new ResponseEntity<String>(msg,HttpStatus.CREATED);
+	// 파일 업로드 부분
+	if(file!=null) {
+		// 경로에 해당하는 디렉토리가 없으면 디렉토리  생성
+		File newFile = new File(uploadPath);
+		if(!newFile.exists()) {
+			newFile.mkdir();
+		}
+		
+		if(user != null) {
+			// user 객체에 파일의 이름을 저장 
+			user.setImg(System.currentTimeMillis() + "_" + file.getOriginalFilename());
+			user.setOrgimg(file.getOriginalFilename());
+			
+			// 파일 생성부분 중요 
+			file.transferTo(new File(uploadPath + "/" + user.getImg()));
+			userservice.updateUser(user);
+		}
+	}
+	
+	
+
+	if(result==1) {	
+		return new ResponseEntity<String>("회원가입 성공!",HttpStatus.CREATED);
 	}else {
-		msg = "회원가입에 실패했습니다.";
-				return new ResponseEntity<String>(msg,HttpStatus.BAD_REQUEST);
+	
+				return new ResponseEntity<String>("실패!",HttpStatus.BAD_REQUEST);
 	}
 	
 }
@@ -111,7 +138,7 @@ public ResponseEntity<?> logout(HttpSession session){
 }
  // 내 정보 수정
 @PutMapping("/update")
-public ResponseEntity<?> updateUser(@RequestBody User user){
+public ResponseEntity<?> updateUser(@RequestBody User user ){
 	
 	try {
 		int result = userservice.updateUser(user);
@@ -141,33 +168,37 @@ public ResponseEntity<?> quit (@PathVariable String userId){
 		return exceptionHandling(e);
 	}
 }
-
 // 회원 이미지 업로드
-@PutMapping("/uploadimg/{userId}")
-public ResponseEntity<?> uploadimg(@PathVariable int userSeq, @RequestParam("img") MultipartFile file){
+//@PutMapping("/uploadimg/{userSeq}")
+@PostMapping("/uploadimg/{userSeq}")
+public ResponseEntity<?> uploadimg(@PathVariable int userSeq, @RequestPart("img") MultipartFile file){
 	try {
 		User user =null;
 		
 		if(file !=null && file.getSize()>0) {
-			Resource res = resLoader.getResource("classpath:static/resources/upload");
-			if(!res.getFile().exists())
-				res.getFile().mkdir();
 			
-			List<User> list = userservice.userList();
+			// resourceLoader를 통해 클래스패스 내의 경로를 받아옴 
+			System.out.println(file);
 			
-			for(int i=0; i<list.size();i++) {
-				if(list.get(i).getUserSeq()==userSeq)
-					user = list.get(i);
+			// 경로에 해당하는 디렉토리가 없으면 디렉토리  생성
+			File newFile = new File(uploadPath);
+			if(!newFile.exists()) {
+				newFile.mkdir();
 			}
+			
+			// 유저 가져오는 부분
+			user = userservice.selectUserBySeq(userSeq);
+			
+			// 유저가 있을경우에만 들어감
 			if(user != null) {
-//				user.setImg(file.getOriginalFilename());
+				// user 객체에 파일의 이름을 저장 
 				user.setImg(System.currentTimeMillis() + "_" + file.getOriginalFilename());
 				user.setOrgimg(file.getOriginalFilename());
-
-				file.transferTo(new File(res.getFile().getCanonicalPath() + "/" + user.getImg()));
+				
+				// 파일 생성부분 중요 
+				file.transferTo(new File(uploadPath + "/" + user.getImg()));
 			}
 		}
-
 		int result = userservice.updateUser(user);
 
 		if(result != 0) {
