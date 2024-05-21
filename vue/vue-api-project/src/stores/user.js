@@ -17,7 +17,7 @@ export const useUserStore = defineStore("user", () => {
       data: user,
     })
       .then(() => {
-        router.push({ name: "user" });
+        router.push({ name: "home" });
       })
       .catch((err) => {
         console.log(err);
