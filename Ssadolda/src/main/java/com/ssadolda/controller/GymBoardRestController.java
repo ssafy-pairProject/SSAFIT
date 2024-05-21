@@ -104,7 +104,7 @@ public class GymBoardRestController {
 	
 //	 헬스장 삭제
 	@DeleteMapping("/delete/{gymSeq}")
-	public ResponseEntity<?> deleteGym(@RequestBody Gym gym,@PathVariable int gymSeq){
+	public ResponseEntity<?> deleteGym(@PathVariable int gymSeq){
 		try {
 			int result = gymboardservice.deleteGym(gymSeq);
 			if(result!=0)
