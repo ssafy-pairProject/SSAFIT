@@ -2,22 +2,26 @@
   <div id="container">
     <header>
       <nav>
-<<<<<<< HEAD
-        <RouterLink to="/">Home</RouterLink> |
-        <RouterLink to="/youtube">Youtube</RouterLink> |
-        <RouterLink :to="{ name: 'tmap' }">Tmap</RouterLink> |
-        <RouterLink :to="{ name: 'gym' }">Gym</RouterLink> |
-=======
-        <RouterLink to="/"><i class="bi bi-house-fill"></i>Home</RouterLink><img src="" alt=""> 
-        <RouterLink to="/youtube"><i class="bi bi-play-btn-fill"></i>Youtube</RouterLink> 
-        <RouterLink :to="{ name: 'tmap' }"><i class="bi bi-person-walking"></i>Tmap exercise</RouterLink> 
-        <RouterLink :to="{ name: 'gym' }"><i class="bi bi-list-ul"></i>GymList</RouterLink> 
-        <RouterLink :to="{ name: 'user' }"><i class="bi bi-person-vcard"></i>MyPage</RouterLink> 
->>>>>>> main
+        <RouterLink to="/"><i class="bi bi-house-fill"></i>Home</RouterLink
+        ><img src="" alt="" />
+        <RouterLink to="/youtube"
+          ><i class="bi bi-play-btn-fill"></i>Youtube</RouterLink
+        >
+        <RouterLink :to="{ name: 'tmap' }"
+          ><i class="bi bi-person-walking"></i>Tmap exercise</RouterLink
+        >
+        <RouterLink :to="{ name: 'gym' }"
+          ><i class="bi bi-list-ul"></i>GymList</RouterLink
+        >
+        <RouterLink :to="{ name: 'user' }"
+          ><i class="bi bi-person-vcard"></i>MyPage</RouterLink
+        >
         <RouterLink v-if="!isLoggedIn" :to="{ name: 'userLogin' }"
           ><i class="bi bi-person"></i>Login</RouterLink
         >
-        <RouterLink v-else :to="{ name: 'userLogout' }"><i class="bi bi-person-fill-check"></i>Logout</RouterLink>
+        <RouterLink v-else :to="{ name: 'userLogout' }"
+          ><i class="bi bi-person-fill-check"></i>Logout</RouterLink
+        >
       </nav>
     </header>
   </div>
@@ -33,16 +37,15 @@ const isLoggedIn = computed(() => store.loginUserId !== null);
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 #container {
-  font-family: 'Montserrat', sans-serif;
-  
+  font-family: "Montserrat", sans-serif;
+
   display: flex;
 }
 
-
-i{
-  margin : 10px ;
+i {
+  margin: 10px;
   font-size: 20px;
 }
 
@@ -69,7 +72,7 @@ nav a {
   font-weight: bold;
   text-decoration: none;
   color: black;
-  margin:19px 0;
+  margin: 19px 0;
 }
 
 nav a.router-link-exact-active {
