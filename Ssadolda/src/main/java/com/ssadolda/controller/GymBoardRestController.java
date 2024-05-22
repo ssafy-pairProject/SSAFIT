@@ -35,7 +35,7 @@ public class GymBoardRestController {
 
 	private final GymBoardService gymboardservice;
 	
-	@Value("${fileupload.upload.path}")
+	@Value("${gymfileupload.upload.path}")
 	private String uploadPath;
 
 	
@@ -55,7 +55,7 @@ public class GymBoardRestController {
 	// 헬스장 등록
 	// 관리자 권한 나중에추가
 	@PostMapping("/regist")
-	public ResponseEntity<?> registGym(@RequestBody Gym gym, @RequestPart MultipartFile file){
+	public ResponseEntity<?> registGym(@RequestPart Gym gym, @RequestPart("gymImg") MultipartFile file){
 		int result = gymboardservice.registGym(gym);
 		try {
 			if(file!=null) {
@@ -69,8 +69,8 @@ public class GymBoardRestController {
 				if(gym!=null) {
 					gym.setGymImg(System.currentTimeMillis()+"_"+file.getOriginalFilename());
 					file.transferTo(new File(uploadPath + "/" + gym.getGymImg()));
+					gymboardservice.modifyGym(gym);
 				}
-				gymboardservice.modifyGym(gym);
 				
 			}
 			

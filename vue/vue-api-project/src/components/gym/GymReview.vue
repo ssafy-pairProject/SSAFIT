@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>리뷰</h2>
+
     <ReviewCreate @review-added="fetchReviews" :gym-seq="gymSeq" />
     <ReviewList
       :reviews="reviews"
