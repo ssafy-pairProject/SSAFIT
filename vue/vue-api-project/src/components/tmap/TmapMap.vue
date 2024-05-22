@@ -1,5 +1,5 @@
 <template>
-  <h2>Tmap</h2>
+  <h2>오늘의 런닝 루트를 확인해보세요!</h2>
   <div id="map_div"></div>
   <div>
     <label for="route" class="label">경로선택</label><br />
@@ -44,6 +44,7 @@
 
 <script setup>
 import { onMounted, ref } from "vue";
+import Iconpng from "@/assets/person-running.png";
 
 let map;
 const startPoint = ref("");
@@ -75,7 +76,7 @@ const initializeMap = () => {
   const center = new Tmapv2.LatLng(37.566481622437934, 126.98502302169841);
   const mapOptions = {
     center: center,
-    width: "50%",
+    width: "100%",
     height: "300px",
     httpsMode: true,
     zoom: 15,
@@ -130,7 +131,8 @@ const addMarker = (coordinates, type) => {
     startMarker = new Tmapv2.Marker({
       position: position,
       map: map,
-      icon: "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png", // 새로운 출발지 마커 아이콘
+      icon: "https://tmapapi.tmapmobility.com/upload/tmap/marker/pin_r_m_a.png", // 새로운 출발지 마커 아이콘
+      iconSize: new Tmapv2.Size(32, 32), // 아이콘 크기 조절
     });
     map.setCenter(position);
   } else {
@@ -140,7 +142,8 @@ const addMarker = (coordinates, type) => {
     endMarker = new Tmapv2.Marker({
       position: position,
       map: map,
-      icon: "https://developers.google.com/maps/documentation/javascript/examples/full/images/info-i_maps.png", // 새로운 도착지 마커 아이콘
+      icon: "https://tmapapi.tmapmobility.com/upload/tmap/marker/pin_b_m_b.png", // 새로운 도착지 마커 아이콘
+      iconSize: new Tmapv2.Size(32, 32), // 아이콘 크기 조절
     });
     map.setCenter(position);
   }
@@ -274,30 +277,60 @@ function toRadians(degrees) {
 </script>
 
 <style>
+/* 지도 스타일 */
 #map_div {
   width: 100%;
   height: 500px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+
+/* 경로 설정 스타일 */
 #routeCSS {
-  margin: 10px 0;
+  margin: 20px 0;
 }
+
+/* 출발지, 목적지 입력란 스타일 */
 #startCSS,
 #endCSS {
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
+
+/* 텍스트 입력란 스타일 */
 .text {
   width: 80%;
-  padding: 5px;
-  margin-right: 10px;
+  padding: 10px;
+  margin-right: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
 }
+
+/* 버튼 스타일 */
 .btn-primary {
-  padding: 5px 10px;
-  background-color: #007bff;
+  padding: 10px 20px;
+  background-color: #4caf50;
   border: none;
+  border-radius: 5px;
   color: white;
   cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
 }
+
 .btn-primary:hover {
-  background-color: #0056b3;
+  background-color: #45a049;
+}
+
+/* 입력란과 버튼을 감싸는 div 요소 */
+.input-group {
+  margin-bottom: 20px;
+}
+
+/* 입력란과 버튼을 나란히 배치하는 스타일 */
+.input-group .text,
+.input-group .btn-primary {
+  display: inline-block;
+  vertical-align: middle;
 }
 </style>
