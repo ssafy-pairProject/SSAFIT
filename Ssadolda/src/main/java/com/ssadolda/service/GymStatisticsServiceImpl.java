@@ -22,4 +22,9 @@ public class GymStatisticsServiceImpl implements GymStatisticsService {
 	    public void updateGymStatistics(GymStatistics gymStatistics) {
 	        gymStatisticsDao.updateGymStatistics(gymStatistics);
 	    }
+
+		@Override
+		public int gymCount() {
+			return gymStatisticsDao.gymCount();
+		}
 	}

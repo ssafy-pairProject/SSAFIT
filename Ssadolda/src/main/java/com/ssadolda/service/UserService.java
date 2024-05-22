@@ -37,4 +37,6 @@ public interface UserService {
 	
 	User selectUserByUserId(String userId);
 	
+	int userCount();
+	
 }

@@ -49,6 +49,10 @@
 		  FROM users
 		 WHERE userId = #{userId}
 	</select>
+	
+	<select id="userCount" resultType="int">
+		SELECT COUNT(*)FROM users
+	</select>
 
 
 

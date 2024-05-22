@@ -15,11 +15,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ssadolda.model.dto.Gym;
+import com.ssadolda.model.dto.Gymsort;
 import com.ssadolda.service.GymBoardService;
 
 import lombok.RequiredArgsConstructor;
@@ -33,7 +35,7 @@ public class GymBoardRestController {
 
 	private final GymBoardService gymboardservice;
 	
-	@Value("${fileupload.upload.path}")
+	@Value("${gymfileupload.upload.path}")
 	private String uploadPath;
 
 	
@@ -53,7 +55,7 @@ public class GymBoardRestController {
 	// 헬스장 등록
 	// 관리자 권한 나중에추가
 	@PostMapping("/regist")
-	public ResponseEntity<?> registGym(@RequestBody Gym gym, @RequestPart MultipartFile file){
+	public ResponseEntity<?> registGym(@RequestPart Gym gym, @RequestPart("gymImg") MultipartFile file){
 		int result = gymboardservice.registGym(gym);
 		try {
 			if(file!=null) {
@@ -67,8 +69,8 @@ public class GymBoardRestController {
 				if(gym!=null) {
 					gym.setGymImg(System.currentTimeMillis()+"_"+file.getOriginalFilename());
 					file.transferTo(new File(uploadPath + "/" + gym.getGymImg()));
+					gymboardservice.modifyGym(gym);
 				}
-				gymboardservice.modifyGym(gym);
 				
 			}
 			
@@ -134,6 +136,16 @@ public class GymBoardRestController {
 			return exceptionHandling(e);
 		}
 	}
+	
+	// 헬스장 정렬 조회 수 / 좋아요수 / 리뷰 수 / 
+	@GetMapping("/sortList")
+	public ResponseEntity<?> sortGym (@RequestParam(required = false) String sortBy,
+			@RequestParam(required = false) String order){
+		List<Gymsort> gyms = gymboardservice.sortGym(sortBy,order);
+		return new ResponseEntity<>(gyms, HttpStatus.OK);
+		
+	}
+	
 
 	private ResponseEntity<String> exceptionHandling(Exception e) {
 		e.printStackTrace();

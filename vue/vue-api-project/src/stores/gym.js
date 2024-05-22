@@ -6,15 +6,24 @@ import router from "@/router";
 const REST_GYM_API = `http://localhost:8080/gym`;
 
 export const useGymStore = defineStore("gym", () => {
+
+  const gymImg = ref(null);
   const createGym = function (gym) {
-    axios({
-      url: `${REST_GYM_API}/regist`,
-      method: "POST",
-      // 아래 작업하지 않아도 그냥 JSON 형태로 Content-type을 결정해서 보내버림
-      // headers: {
-      //   "Content-Type": "applcation/json"
-      // },
-      data: gym,
+
+    const gymToBlob = new Blob([JSON.stringify(gym)], {
+      type: 'application/json'
+    })
+
+    var formData = new FormData()
+
+    formData.append("gym", gymToBlob);
+    formData.append("gymImg", gymImg.value);
+
+    
+    axios.post(`${REST_GYM_API}/regist`, formData,  {
+      headers: {
+        "Content-Type": `multipart/form-data`
+      }
     })
       .then(() => {
         router.push({ name: "gymList" });
@@ -80,5 +89,6 @@ export const useGymStore = defineStore("gym", () => {
     gym,
     getGym,
     modifyGym,
+    gymImg,
   };
 });
