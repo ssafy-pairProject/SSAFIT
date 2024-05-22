@@ -27,32 +27,11 @@ export const useUserStore = defineStore("user", () => {
   const loginUserId = ref(null);
   const currentUser = ref(null); // 현재 로그인한 사용자 정보
 
-<<<<<<< HEAD
   const userLogin = async function (id, password) {
     try {
       const res = await axios.post(`${REST_USER_API}/login`, {
         userId: id,
         password: password,
-=======
-  const userLogin = function (user) {
-      axios({
-        url: `${REST_USER_API}/login`,
-        method: "POST",
-        data:user,
-  })
-      .then((res) => {
-        sessionStorage.setItem("access-token", res.data["access-token"]);
-        const token = res.data["access-token"].split(".");
-        let id = JSON.parse(atob([token[1]]))["id"];
-        loginUserId.value = id;
-
-        router.push({ name: "home" });
-      })
-      .catch((err) => {
-        console.log(userId)
-        console.log(password)
-        console.log(err);
->>>>>>> main
       });
       sessionStorage.setItem("access-token", res.data["access-token"]);
       const token = res.data["access-token"].split(".");
