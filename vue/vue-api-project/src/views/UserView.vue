@@ -4,7 +4,7 @@
     <UserButtons v-if="showButtons" @hide-buttons="hideButtons" />
     <router-view v-else></router-view>
   </div>
-  <RouterView />
+ 
 </template>
 
 <script setup>
