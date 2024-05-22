@@ -5,6 +5,7 @@
         <h1>회원가입</h1>
         <span>짐싸의 회원이 되어 보세요!</span>
         <div class="input-group mb-3">
+
           <input
             type="text"
             class="form-control"
@@ -68,6 +69,8 @@
         />
 
         <button type="submit" :disabled="!isUserIdAvailable">Sign Up</button>
+    
+
       </form>
     </div>
 
@@ -165,6 +168,18 @@ const handleLogin = async () => {
     emit("hide-buttons");
     alert(`${store.currentUser.nickname} 님 환영합니다!`); // 로그인 성공 시 환영 메시지
   }
+};
+
+const checkUserId = async () => {
+  const response = await store.checkUserId(signupUser.value.userId);
+  isUserIdChecked.value = true;
+  isUserIdAvailable.value = response.isAvailable;
+  userIdCheckMessage.value = response.message;
+};
+
+const resetUserIdCheck = () => {
+  isUserIdChecked.value = false;
+  userIdCheckMessage.value = "";
 };
 </script>
 

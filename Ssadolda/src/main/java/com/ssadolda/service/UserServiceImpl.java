@@ -73,6 +73,10 @@ public class UserServiceImpl implements UserService {
 	public User selectUserByUserId(String userId) {
 		return userdao.selectUserByUserId(userId);
 	}
+	@Override
+	public int userCount() {
+		return userdao.userCount();
+	}
 	
 
 

@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ssadolda.model.dao.GymDao;
 import com.ssadolda.model.dao.GymStatisticsDao;
 import com.ssadolda.model.dto.Gym;
+import com.ssadolda.model.dto.Gymsort;
 
 import lombok.RequiredArgsConstructor;
 @Service
@@ -68,6 +69,11 @@ public class GymBoardServiceImpl implements GymBoardService {
 	  public void incrementViewCount(int gymSeq) {
 	        gymstatisticdao.incrementViewCount(gymSeq); // 조회수 증가 로직 호출
 	    }
+
+	@Override
+	public List<Gymsort> sortGym(String sortBy, String order) {
+		  return gymstatisticdao.sortGyms(sortBy, order);
+	}
 	
 	
 

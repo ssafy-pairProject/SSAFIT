@@ -3,6 +3,7 @@ package com.ssadolda.service;
 import java.util.List;
 
 import com.ssadolda.model.dto.Gym;
+import com.ssadolda.model.dto.Gymsort;
 
 public interface GymBoardService {
 	
@@ -35,5 +36,9 @@ public interface GymBoardService {
 	void incrementViewCount(int gymSeq);
 	
 	int insertGymStatistics(int gymSeq);
+	
+	List<Gymsort> sortGym(String sortBy,String order);
+	
+	
 
 }
