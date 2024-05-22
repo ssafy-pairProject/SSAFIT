@@ -27,7 +27,6 @@ export const useUserStore = defineStore("user", () => {
   const loginUserId = ref(null);
   const currentUser = ref(null); // 현재 로그인한 사용자 정보
 
-
   const userLogin = async function (id, password) {
     try {
       const res = await axios.post(`${REST_USER_API}/login`, {
