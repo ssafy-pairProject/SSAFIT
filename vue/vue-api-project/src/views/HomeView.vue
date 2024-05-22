@@ -2,7 +2,7 @@
   <div class="content">
     <!-- Navbar -->
     <nav>
-      <!-- 프로필 사진 유저 이미지 동적으로 가져오기 -->
+      <!-- 프로필 사진 유저 이미지 동적으로 가져오기 -->  
       <a href="#" class="profile">
         <img src='@/assets/image.png'>
       </a>
@@ -29,17 +29,17 @@
           </span>
         </li>
         <li>
-          <img src='@/assets/icons/visitCount.png' style width="70px">
-          <span class="info">
-            <h3>3,944</h3>
-            <p>Site Visit</p>
-          </span>
-        </li>
-        <li>
           <img src='@/assets/icons/gym.png' style width="70px">
           <span class="info">
             <h3>110</h3>
             <p>Gyms</p>
+          </span>
+        </li>
+        <li>
+          <img src='@/assets/icons/visitCount.png' style width="70px">
+          <span class="info">
+            <h3>3,944</h3>
+            <p>Site Visit</p>
           </span>
         </li>
       </ul>

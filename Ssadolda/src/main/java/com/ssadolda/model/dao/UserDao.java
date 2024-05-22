@@ -28,5 +28,7 @@ public interface UserDao {
     int uploadImage(int userSeq);
     
     boolean selectId(String userId);
+    
+    int userCount();
 	
 }

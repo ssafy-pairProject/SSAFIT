@@ -7,4 +7,6 @@ public interface GymStatisticsService {
     GymStatistics getGymStatistics(int gymSeq);
     
     void updateGymStatistics(GymStatistics gymStatistics);
+    
+    int gymCount();
 }
