@@ -35,12 +35,14 @@ export const useUserStore = defineStore("user", () => {
       });
       sessionStorage.setItem("access-token", res.data["access-token"]);
       const token = res.data["access-token"].split(".");
-      let userId = JSON.parse(atob(token[1]))["id"];
-      loginUserId.value = userId;
+      // let userId = JSON.parse(atob(token[1]))["id"];
+      console.log("here");
+      console.log(userId);
+      loginUserId.value = id;
 
       // 로그인 성공 시 사용자 정보 설정
       currentUser.value = await axios
-        .get(`${REST_USER_API}/${userId}`)
+        .get(`${REST_USER_API}/${id}`)
         .then((response) => response.data);
 
       router.push({ name: "home" });

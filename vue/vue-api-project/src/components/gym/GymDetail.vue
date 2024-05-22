@@ -12,6 +12,7 @@
         삭제
       </button>
     </div>
+    <GymReview />
   </div>
 </template>
 
@@ -20,6 +21,7 @@ import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useGymStore } from "@/stores/gym";
 import axios from "axios";
+import GymReview from "@/components/gym/GymReview.vue";
 
 const store = useGymStore();
 const route = useRoute();
@@ -40,14 +42,10 @@ const moveModify = function () {
   });
 };
 
-const deleteGym = function (gym) {
-  console.log("삭제전");
-  console.log(gym);
+const deleteGym = function () {
   axios
     .delete(`${REST_GYM_API}/delete/${route.params.gymSeq}`)
     .then(() => {
-      console.log("삭제후");
-      console.log(gym);
       router.push({ name: "gymList" });
     })
     .catch((err) => {

@@ -4,11 +4,8 @@
       <nav>
         <RouterLink to="/">Home</RouterLink> |
         <RouterLink to="/youtube">Youtube</RouterLink> |
-        <RouterLink :to="{ name: 'boardList' }">BoardList</RouterLink> |
-        <RouterLink :to="{ name: 'boardCreate' }">BoardCreate</RouterLink> |
         <RouterLink :to="{ name: 'tmap' }">Tmap</RouterLink> |
         <RouterLink :to="{ name: 'gym' }">Gym</RouterLink> |
-        <RouterLink :to="{ name: 'user' }">User</RouterLink> |
         <RouterLink v-if="!isLoggedIn" :to="{ name: 'userLogin' }"
           >Login</RouterLink
         >

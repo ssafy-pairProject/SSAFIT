@@ -1,16 +1,9 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import YoutubeView from "@/views/YoutubeView.vue";
-import BoardView from "@/views/BoardView.vue";
 import TmapView from "@/views/TmapView.vue";
 import UserView from "@/views/UserView.vue";
 import GymView from "@/views/GymView.vue";
-
-import BoardCreate from "@/components/board/BoardCreate.vue";
-import BoardList from "@/components/board/BoardList.vue";
-import BoardUpdate from "@/components/board/BoardUpdate.vue";
-import BoardDetail from "@/components/board/BoardDetail.vue";
-
 
 import UserSignup from "@/components/user/UserSignup.vue";
 import UserDetail from "@/components/user/UserDetail.vue";
@@ -22,6 +15,12 @@ import GymModify from "@/components/gym/GymModify.vue";
 import GymRegist from "@/components/gym/GymRegist.vue";
 import GymList from "@/components/gym/GymList.vue";
 import GymReview from "@/components/gym/GymReview.vue";
+
+import ReviewList from "@/components/gym/review/ReviewList.vue";
+import ReviewCreate from "@/components/gym/review/ReviewCreate.vue";
+import ReviewUpdate from "@/components/gym/review/ReviewList.vue";
+import ReviewDetail from "@/components/gym/review/ReviewDetail.vue";
+
 import UserButtons from "@/components/user/userButton/UserButtons.vue";
 
 const router = createRouter({
@@ -36,33 +35,6 @@ const router = createRouter({
       path: "/youtube",
       name: "youtube",
       component: YoutubeView,
-    },
-    {
-      path: "/board",
-      name: "board",
-      component: BoardView,
-      children: [
-        {
-          path: "",
-          name: "boardList",
-          component: BoardList,
-        },
-        {
-          path: "create",
-          name: "boardCreate",
-          component: BoardCreate,
-        },
-        {
-          path: "update",
-          name: "boardUpdate",
-          component: BoardUpdate,
-        },
-        {
-          path: ":id",
-          name: "boardDetail",
-          component: BoardDetail,
-        },
-      ],
     },
     {
       path: "/tmap",
@@ -98,6 +70,33 @@ const router = createRouter({
               path: "",
               name: "gymReview",
               component: GymReview,
+              children: [
+                {
+                  path: "",
+                  name: "reviewList",
+                  component: ReviewList,
+                },
+                {
+                  path: "create",
+                  name: "reviewCreate",
+                  component: ReviewCreate,
+                },
+                // {
+                //   path: "",
+                //   name: "reviewSearchInput",
+                //   component: ReviewUpdate,
+                // },
+                {
+                  path: "update",
+                  name: "reviewUpdate",
+                  component: ReviewUpdate,
+                },
+                {
+                  path: ":reviewSeq",
+                  name: "reviewDetail",
+                  component: ReviewDetail,
+                },
+              ],
             },
           ],
         },
@@ -115,8 +114,8 @@ const router = createRouter({
         },
         {
           path: "login",
-          name : "userLogin",
-          component : UserButtons,
+          name: "userLogin",
+          component: UserButtons,
         },
         {
           path: "detail",
