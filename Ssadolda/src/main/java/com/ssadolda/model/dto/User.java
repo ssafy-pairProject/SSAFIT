@@ -2,15 +2,9 @@ package com.ssadolda.model.dto;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+
 @Data
-@Getter
-@Setter
 public class User {
 	
 	private String userId;
@@ -26,5 +20,7 @@ public class User {
     private String img;
     private String orgimg;
     private MultipartFile file;
+    
+    
 
 }

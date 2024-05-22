@@ -11,7 +11,7 @@ import BoardList from "@/components/board/BoardList.vue";
 import BoardUpdate from "@/components/board/BoardUpdate.vue";
 import BoardDetail from "@/components/board/BoardDetail.vue";
 
-import UserLogin from "@/components/user/UserLogin.vue";
+
 import UserSignup from "@/components/user/UserSignup.vue";
 import UserDetail from "@/components/user/UserDetail.vue";
 import UserLogout from "@/components/user/UserLogout.vue";
@@ -22,6 +22,7 @@ import GymModify from "@/components/gym/GymModify.vue";
 import GymRegist from "@/components/gym/GymRegist.vue";
 import GymList from "@/components/gym/GymList.vue";
 import GymReview from "@/components/gym/GymReview.vue";
+import UserButtons from "@/components/user/userButton/UserButtons.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -113,15 +114,16 @@ const router = createRouter({
           component: UserSignup,
         },
         {
+          path: "login",
+          name : "userLogin",
+          component : UserButtons,
+        },
+        {
           path: "detail",
           name: "userDetail",
           component: UserDetail,
         },
-        {
-          path: "login",
-          name: "userLogin",
-          component: UserLogin,
-        },
+
         // 안전하게 로그아웃이 되었습니다. 띄우고 다시 돌아가기
         {
           path: "logout",

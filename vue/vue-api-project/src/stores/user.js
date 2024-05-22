@@ -7,7 +7,9 @@ const REST_USER_API = `http://localhost:8080/user`;
 
 export const useUserStore = defineStore("user", () => {
   const createUser = function (user) {
+    console.log(user);
     axios({
+      
       url: `${REST_USER_API}/signup`,
       method: "POST",
       // 아래 작업하지 않아도 그냥 JSON 형태로 Content-type을 결정해서 보내버림
@@ -17,7 +19,7 @@ export const useUserStore = defineStore("user", () => {
       data: user,
     })
       .then(() => {
-        router.push({ name: "home" });
+        // router.push({ name: "home" });
       })
       .catch((err) => {
         console.log(err);
@@ -26,12 +28,14 @@ export const useUserStore = defineStore("user", () => {
 
   const loginUserId = ref(null);
 
-  const userLogin = function (id, password) {
-    axios
-      .post(`${REST_USER_API}/login`, {
-        userId: id,
-        password: password,
-      })
+  const userLogin = function (user) {
+
+
+      axios({
+        url: `${REST_USER_API}/login`,
+        method: "POST",
+        data:user,
+  })
       .then((res) => {
         sessionStorage.setItem("access-token", res.data["access-token"]);
         const token = res.data["access-token"].split(".");
@@ -41,6 +45,8 @@ export const useUserStore = defineStore("user", () => {
         router.push({ name: "home" });
       })
       .catch((err) => {
+        console.log(userId)
+        console.log(password)
         console.log(err);
       });
   };
@@ -54,6 +60,7 @@ export const useUserStore = defineStore("user", () => {
         router.push({ name: "home" });
       })
       .catch((err) => {
+        
         console.log(err);
       });
   };
