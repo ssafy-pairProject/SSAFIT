@@ -40,6 +40,11 @@
         WHERE gymSeq = #{gymSeq}
     </update>
     
+    <select id="gymCount" resultType="int">
+    	SELECT COUNT(*)
+    	FROM gymStatistics
+    </select>
+    
     
     <!--  좋아요 증가 감소 -->
     
@@ -54,6 +59,40 @@
     SET totalLikeCount = totalLikeCount - 1
     WHERE gymSeq = #{gymSeq}
     </update>
+    
+    <!--  정렬하기 -->
+    
+        <select id="sortGyms" parameterType="map" resultType="Gymsort">
+        SELECT g.*, gs.totalViewCount, gs.averageRating, gs.reviewCount, gs.totalLikeCount
+        FROM gyms g
+        LEFT JOIN gymStatistics gs ON g.gymSeq = gs.gymSeq
+        ORDER BY
+            <choose>
+                <when test="sortBy == 'totalViewCount'">
+                    gs.totalViewCount
+                </when>
+                <when test="sortBy == 'averageRating'">
+                    gs.averageRating
+                </when>
+                <when test="sortBy == 'reviewCount'">
+                    gs.reviewCount
+                </when>
+                <when test="sortBy == 'totalLikeCount'">
+                    gs.totalLikeCount
+                </when>
+                <otherwise>
+                    g.gymSeq
+                </otherwise>
+            </choose>
+            <choose>
+                <when test="order == 'desc'">
+                    DESC
+                </when>
+                <otherwise>
+                    ASC
+                </otherwise>
+            </choose>
+    </select>
     
     
 

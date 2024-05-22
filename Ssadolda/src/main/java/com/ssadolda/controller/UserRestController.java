@@ -57,34 +57,39 @@ public class UserRestController {
 
 // 회원가입
 	@PostMapping("/signup")
-//public ResponseEntity<?> signup(@RequestBody User user, HttpSession session,@RequestPart("img") MultipartFile file) throws IllegalStateException, IOException {
-	public ResponseEntity<?> signup(@RequestBody User user, HttpSession session)
-			throws IllegalStateException, IOException {
+	public ResponseEntity<?> signup(@RequestPart User user,@RequestPart("imgFile") MultipartFile imgFile) throws IllegalStateException, IOException {
 
+	System.out.println(user);
+	System.out.println(imgFile);
 		if (userservice.selectId(user.getUserId())) {
 			return new ResponseEntity<String>("이미 존재하는 아이디 입니다!", HttpStatus.BAD_REQUEST);
 		}
 		int result = userservice.registUser(user);
-//	// 파일 업로드 부분
-//	if(file!=null) {
-//		// 경로에 해당하는 디렉토리가 없으면 디렉토리  생성
-//		File newFile = new File(uploadPath);
-//		if(!newFile.exists()) {
-//			newFile.mkdir();
-//		}
-//		
-//		if(user != null) {
-//			// user 객체에 파일의 이름을 저장 
-//			user.setImg(System.currentTimeMillis() + "_" + file.getOriginalFilename());
-//			user.setOrgimg(file.getOriginalFilename());
-//			
-//			// 파일 생성부분 중요 
-//			file.transferTo(new File(uploadPath + "/" + user.getImg()));
-//			userservice.updateUser(user);
-//		}
-//	}
+		// 파일 업로드 부분
+		if(imgFile!=null) {
+			// 경로에 해당하는 디렉토리가 없으면 디렉토리  생성
+			File newFile = new File(uploadPath);
+			if(!newFile.exists()) {
+				newFile.mkdir();
+			}
+			
+			if(user != null) {
+				// user 객체에 파일의 이름을 저장 
+				user.setImg(System.currentTimeMillis() + "_" + imgFile.getOriginalFilename());
+				user.setOrgimg(imgFile.getOriginalFilename());
+				
+				// 파일 생성부분 중요 
+				imgFile.transferTo(new File(uploadPath + "/" + user.getImg()));
+				userservice.updateUser(user);
+			}
+		}
+			//프론트쪽에서 서버로요청 -> 필요한 User 객체에 이미지 패스를 response해서 받아오는 것을 확인.
+			//프론트쪽에서 asset userimg에 내가 업로드한 파일이 있는지 확인하고
+			//프론트에서 수동으로 img 패스를지정해서 화면에 나오는지 확인 
+			//response에서 받은것을 src속성에 v-bind로 연결해서 path를 지정 
+		
 
-		if (result == 1) {
+		if (result !=0) {
 			return new ResponseEntity<String>("회원가입 성공!", HttpStatus.CREATED);
 		} else {
 

@@ -1,6 +1,6 @@
 <template>
   <div class="review-create">
-    <h3>리뷰 작성</h3>
+    <h3 ><i class="bi bi-pencil"></i>  리뷰 작성</h3>
     <form @submit.prevent="handleSubmit">
       <textarea
         v-model="reviewContent"
@@ -17,7 +17,7 @@
           >★</span
         >
       </div>
-      <button type="submit" class="submit-button">리뷰 등록</button>
+      <button type="submit" class="submit-button">리뷰등록</button>
     </form>
   </div>
 </template>
@@ -63,8 +63,20 @@ const setRating = (star) => {
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&family=Noto+Serif+KR:wght@200..900&display=swap');
+*{
+  font-family: "Noto Sans KR", sans-serif;
+}
+
+h3{
+  
+   letter-spacing: 2px;
+   text-indent: 0.2em;
+}
+
 .review-create {
-  max-width: 400px;
+  max-width: 1000px;
   margin: 0 auto;
   padding: 20px;
   border: 1px solid #ddd;
@@ -102,7 +114,7 @@ const setRating = (star) => {
   display: block;
   width: 100%;
   padding: 10px;
-  background-color: #28a745;
+  background-color: #512da8;
   color: #fff;
   border: none;
   border-radius: 4px;
