@@ -69,6 +69,10 @@ public class UserServiceImpl implements UserService {
 	public User selectUserBySeq (int userSeq) {
 		return userdao.selectUserByUserSeq(userSeq);
 	}
+	@Override
+	public User selectUserByUserId(String userId) {
+		return userdao.selectUserByUserId(userId);
+	}
 	
 
 
