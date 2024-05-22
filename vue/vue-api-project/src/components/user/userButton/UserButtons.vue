@@ -35,12 +35,10 @@
           v-model="signupUser.name"
         />
         <input
-          type="text"
-          id="nickname"
-          placeholder="닉네임"
-          v-model="signupUser.nickname"
+          type="text" id="nickname"  placeholder="닉네임"  v-model="signupUser.nickname"
         />
-        <!-- <input type="text" placeholder="이미지" v-model="signupUser.img"> -->
+        <input multiple @change="imageUpload($event)" ref="images" type="file" />
+     
         <button type="submit">Sign Up</button>
       </form>
     </div>
@@ -95,7 +93,7 @@ const signupUser = ref({
   phoneNumber: "",
   name: "",
   nickname: "",
-  // img:"",
+  img:"",
 });
 
 const id = ref("");
@@ -109,6 +107,13 @@ const isSignUpActive = ref(false);
 const setActive = (isActive) => {
   isSignUpActive.value = isActive;
 };
+
+const imageUpload = (event) =>{
+  console.log(event.target.files[0]);
+  //pinia에 있는 변수를 바꾸기 
+  // 달러 현재발생한 도큐멘트에서 발생한 change 이벤트를가져옴
+  store.imgFile=event.target.files[0];
+}
 
 const handleSignup = () => {
   store.createUser(signupUser.value);
