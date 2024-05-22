@@ -5,11 +5,18 @@
         <h1>회원가입</h1>
         <span>짐싸의 회원이 되어 보세요!</span>
         <input
-          type="text"
-          id="userId"
-          placeholder="아이디"
-          v-model="signupUser.userId"
-        />
+            type="text"
+            class="form-control"
+            id="userId"
+            placeholder="아이디"
+            v-model="signupUser.userId"
+            @input="resetUserIdCheck"
+          />
+          <button class="btn btn-outline-secondary" type="button" @click="checkUserId">중복 체크</button>
+        </div>
+        <div v-if="isUserIdChecked" :class="{'text-success': isUserIdAvailable, 'text-danger': !isUserIdAvailable}">
+          {{ userIdCheckMessage }}
+        </div>
         <input
           type="password"
           id="upassword"
@@ -104,6 +111,10 @@ const router = useRouter();
 const emit = defineEmits(["hide-buttons"]);
 const isSignUpActive = ref(false);
 
+const isUserIdChecked = ref(false);
+const isUserIdAvailable = ref(false);
+const userIdCheckMessage = ref("");
+
 const setActive = (isActive) => {
   isSignUpActive.value = isActive;
 };
@@ -116,15 +127,17 @@ const imageUpload = (event) =>{
 }
 
 const handleSignup = () => {
+  if (isUserIdAvailable.value) {
   store.createUser(signupUser.value);
   isSignUpActive.value = false; // 회원가입 완료 후 로그인 폼으로 전환
   emit("hide-buttons");
+  }
 };
 
 const handleLogin = async () => {
   const loginSuccess = await store.userLogin(id.value, password.value);
   if (!loginSuccess) {
-    alert("아이디나 비밀번호를 다시한번 확인하세요");
+    alert("아이디나 비밀번호를 다시 한 번 확인하세요");
   } else {
     emit("hide-buttons");
     alert(`${store.currentUser.nickname} 님 환영합니다!`); // 로그인 성공 시 환영 메시지
