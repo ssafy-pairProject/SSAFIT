@@ -29,8 +29,6 @@ export const useUserStore = defineStore("user", () => {
   const loginUserId = ref(null);
 
   const userLogin = function (user) {
-
-
       axios({
         url: `${REST_USER_API}/login`,
         method: "POST",

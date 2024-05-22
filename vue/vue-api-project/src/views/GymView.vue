@@ -15,6 +15,7 @@
           >헬스장등록</RouterLink
         >
       </li>
+
       <!-- <li class="nav-item">
         <RouterLink :class="`${gymSeq}`" class="nav-link" :to="{ name: 'gymDetail' }">헬스장상세</RouterLink>
       </li> -->
@@ -38,6 +39,8 @@ const regist = computed(() => {
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+*{font-family: 'Montserrat', sans-serif;}
 .my-h2 {
   display: inline-block;
 }

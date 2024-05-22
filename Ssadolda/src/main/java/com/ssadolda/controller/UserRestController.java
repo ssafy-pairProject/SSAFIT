@@ -226,6 +226,20 @@ public class UserRestController {
 	}
 	
 //	 내 정보
+	
+	@GetMapping("{userId}")
+	public ResponseEntity<?> getUserId(@PathVariable String userId){
+		User user =null;
+		try {
+			user = userservice.selectUserByUserId(userId);
+		} catch (Exception e) {
+			return exceptionHandling(e);
+		}
+		if(user==null) {
+			return new ResponseEntity<String>("존재하지 않는 사용자입니다.", HttpStatus.BAD_REQUEST);
+		}
+		return new ResponseEntity<User>(user, HttpStatus.OK);
+	}
 
 	
 	private ResponseEntity<String> exceptionHandling(Exception e) {

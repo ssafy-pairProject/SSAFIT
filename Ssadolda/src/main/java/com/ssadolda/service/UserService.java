@@ -35,4 +35,6 @@ public interface UserService {
 
 	User selectUserBySeq(int userSeq);
 	
+	User selectUserByUserId(String userId);
+	
 }

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <div class="row">
       <RouterLink
         :to="{ name: 'gymDetail', params: { gymSeq: gym.gymSeq } }"
@@ -10,24 +10,13 @@
         <div class="card-body">
           <h5 class="card-title">{{ gym.gymName }}</h5>
           <p class="card-text"><strong>주소:</strong> {{ gym.gymAddress }}</p>
-          <p class="card-text">
-            <strong>전화번호:</strong> {{ gym.gymPhoneNumber }}
-          </p>
+          <p class="card-text"><strong>전화번호:</strong> {{ gym.gymPhoneNumber }}</p>
           <p class="card-text"><strong>가격(원):</strong> {{ gym.gymPrice }}</p>
-          <p class="card-text">
-            <strong>헬스장 소개:</strong> {{ gym.gymIntroduce }}
-          </p>
-          <p class="card-text">
-            <strong>영업시간:</strong> {{ gym.gymOperatingHours }}
-          </p>
-          <p class="card-text">
-            <strong>어메니티:</strong> {{ gym.gymAmenities }}
-          </p>
-          <p class="card-text">
-            <strong>추가 서비스:</strong> {{ gym.gymAdditionalService }}
-          </p>
+          <p class="card-text"><strong>헬스장 소개:</strong> {{ gym.gymIntroduce }}</p>
+          <p class="card-text"><strong>영업시간:</strong> {{ gym.gymOperatingHours }}</p>
+          <p class="card-text"><strong>부가 시설:</strong> {{ gym.gymAmenities }}</p>
+          <p class="card-text"><strong>추가 서비스:</strong> {{ gym.gymAdditionalService }}</p>
           <p class="card-text"><strong>조회수:</strong> {{ gym.gymviews }}</p>
-          <!-- npm install --save @fortawesome/fontawesome-free -->
           <span class="heart-icon" @click="toggleLike(gym)">
             <i v-if="gym.userLiked" class="fas fa-heart"></i>
             <i v-else class="far fa-heart"></i>
@@ -43,9 +32,7 @@ import { ref, onMounted, computed } from "vue";
 import { useGymStore } from "@/stores/gym";
 
 const store = useGymStore();
-const gymList = computed(() => {
-  return store.gymList;
-});
+const gymList = computed(() => store.gymList);
 
 onMounted(() => {
   store.getGymList();
@@ -53,33 +40,90 @@ onMounted(() => {
 
 const toggleLike = (gym) => {
   gym.userLiked = !gym.userLiked;
-  if (gym.userLiked) {
-    gym.userLikeCnt += 1;
-  } else {
-    gym.userLikeCnt -= 1;
-  }
+  gym.userLikeCnt += gym.userLiked ? 1 : -1;
   // 서버에 업데이트를 보내는 코드 추가 가능
 };
 </script>
 
 <style scoped>
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+body {
+ 
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 2rem 0;
+  width: 100%;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
 .card {
   width: 100%;
-  margin-bottom: 1rem;
+  max-width: 600px;
+  margin: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  transition: box-shadow 0.3s ease;
+  text-decoration: none;
+  background: linear-gradient(to right, #fff, #512da8);
+  overflow: hidden;
 }
+
+.card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-body {
+  width: calc(100% - 26px);
+  display: grid;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  margin: 8px 13px;
+}
+
 .card-title {
   font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: rgb(61, 65, 73);
 }
+
 .card-text {
   margin-bottom: 0.5rem;
+  font-size: 1rem;
+  color: rgb(61, 65, 73);
 }
 
 .heart-icon {
   cursor: pointer;
   color: rgb(155, 0, 0);
+  float: right;
 }
 
 .heart-icon i {
   font-size: 20px;
+}
+
+*::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  background: transparent;
 }
 </style>
