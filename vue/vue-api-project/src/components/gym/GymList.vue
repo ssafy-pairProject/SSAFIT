@@ -59,6 +59,7 @@ body {
   align-items: center;
 }
 
+
 .container {
   display: flex;
   justify-content: center;
@@ -81,13 +82,12 @@ body {
   border-radius: 10px;
   transition: box-shadow 0.3s ease;
   text-decoration: none;
-  background: linear-gradient(to right, #fff, #512da8);
+  /* background: linear-gradient(to right, #fff, #512da8); */
   overflow: hidden;
 }
 
 .card:hover {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
+  box-shadow: rgba(240, 46, 170, 0.4) 5px 5px, rgba(240, 46, 170, 0.3) 10px 10px, rgba(240, 46, 170, 0.2) 15px 15px, rgba(240, 46, 170, 0.1) 20px 20px, rgba(240, 46, 170, 0.05) 25px 25px;}
 
 .card-body {
   width: calc(100% - 26px);
