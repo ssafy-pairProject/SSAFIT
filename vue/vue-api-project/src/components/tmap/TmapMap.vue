@@ -2,10 +2,10 @@
   <h2>오늘의 런닝 루트를 확인해보세요!</h2>
   <div id="map_div"></div>
   <div>
-    <label for="route" class="label">경로선택</label><br />
+    <label for="route" class="label"></label><br />
     <div id="routeCSS">
       <div id="startCSS">
-        <label for="startPoint">출발지</label><br />
+        <label for="startPoint"><h4>출발지</h4></label><br />
         <input
           type="text"
           class="text"
@@ -13,11 +13,14 @@
           placeholder="검색어를 입력해주세요"
           v-model="startPoint"
         />
-        <button class="btn btn-primary" @click="searchStartPoint">검색</button>
+
+        <button class="pathsearchbutton" @click="searchStartPoint">검색</button>
+
+
       </div>
-      <div>{{ startLon }} {{ startLat }}</div>
+      <i class="bi bi-signpost"></i>
       <div id="endCSS">
-        <label for="endPoint">도착지</label><br />
+        <label for="endPoint"><h4>도착지</h4></label><br />
         <input
           type="text"
           class="text"
@@ -25,25 +28,40 @@
           placeholder="검색어를 입력해주세요"
           v-model="endPoint"
         />
-        <button class="btn btn-primary" @click="searchEndPoint">검색</button>
-        <div>{{ endLon }} {{ endLat }}</div>
+
+        <button class="pathsearchbutton" @click="searchEndPoint">검색</button>
+        <!-- <div>{{ endLon }} {{ endLat }}</div> -->
+      </div>
+      <div>
+        <input type="hidden" id="startlon" v-model="startLon" />
+        <input type="hidden" id="startlat" v-model="startLat" />
+        <input type="hidden" id="endlon" v-model="endLon" />
+        <input type="hidden" id="endlat" v-model="endLat" />
+        <button class="pathresultbutton" @click="displayRoute">경로 표시 </button>
       </div>
     </div>
+    
+    
+    
 
-    <input type="hidden" id="startlon" v-model="startLon" />
-    <input type="hidden" id="startlat" v-model="startLat" />
-    <input type="hidden" id="endlon" v-model="endLon" />
-    <input type="hidden" id="endlat" v-model="endLat" />
-    <button class="btn btn-primary" @click="displayRoute">경로 표시</button>
+
     <div>
-      {{ totalDistance }}km {{ totalDistance * 1000 }} m의 경로가
-      표시되었습니다.
+      <input type="hidden" id="startlon" v-model="startLon" />
+      <input type="hidden" id="startlat" v-model="startLat" />
+      <input type="hidden" id="endlon" v-model="endLon" />
+      <input type="hidden" id="endlat" v-model="endLat" />
+      <button class="pathresultbutton" @click="displayRoute">경로 표시 </button>
+       <h5  style="display: inline-block;"> 거리 : {{ totalDistance }}km  예상 도착 시간 : {{ Math.floor((totalDistance /6)*60) }} 분</h5> 
     </div>
+
   </div>
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
+
+import { onMounted, ref,watch,reactive } from "vue";
+
+import gsap from 'gsap'
 import Iconpng from "@/assets/person-running.png";
 
 let map;
@@ -277,23 +295,30 @@ function toRadians(degrees) {
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&family=Noto+Serif+KR:wght@200..900&display=swap');
+*{
+  font-family: "Noto Sans KR", sans-serif;
+}
+
 /* 지도 스타일 */
 #map_div {
   width: 100%;
   height: 500px;
-  border-radius: 10px;
+  border-radius: 0px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 /* 경로 설정 스타일 */
 #routeCSS {
   margin: 20px 0;
+  display:flex;
 }
 
 /* 출발지, 목적지 입력란 스타일 */
 #startCSS,
 #endCSS {
-  margin-bottom: 20px;
+ 
+  width: 30%;
 }
 
 /* 텍스트 입력란 스타일 */
@@ -304,27 +329,78 @@ function toRadians(degrees) {
   border: 1px solid #ccc;
   border-radius: 5px;
   font-size: 16px;
+  margin-bottom: 10px;
 }
 
 /* 버튼 스타일 */
-.btn-primary {
-  padding: 10px 20px;
-  background-color: #4caf50;
-  border: none;
-  border-radius: 5px;
-  color: white;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s ease;
+
+.pathsearchbutton{
+width : 120px;
+height:40px;
+margin-bottom: 20px;
+background-color: #512da8;
+border:none;
+color:white;
+box-shadow: 0 4px 16px rgba(0,79,255,0.3);
+font-size: 16px;
+font-weight: bold;
+border-radius: 20px;
+transition: 0.5s;
+}
+.pathsearchbutton:focus{
+  outline:0;
+}
+.pathsearchbutton:hover{
+  background-color:rgba(192, 175, 212, 0.895) ;
+  cursor:pointer;
+  box-shadow: 0 2px 4pxrgba(0,79,255,0.6) ;
 }
 
-.btn-primary:hover {
-  background-color: #45a049;
+
+.pathresultbutton {
+  background-color: #512da8;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.5s ease;
+  position: relative;
+  top: 37.2px;
+  box-shadow: 0 4px 16px rgba(0,79,255,0.3);
+font-size: 16px;
+font-weight: bold;
+border-radius: 20px;
+transition: 0.5s;
+  
 }
+
+.pathresultbutton:hover {
+  background-color: rgba(192, 175, 212, 0.895); /* Optional: Change color on hover */
+}
+
+.pathresultbutton:active {
+  background: linear-gradient(to right, #512da8 50%, white 50%);
+  background-size: 200% 100%;
+  color: black rgba(116, 199, 200, 0.5); /* Optional: Change text color on click */
+  transition: background 0.5s ease;
+}
+
+
+
+
+
+
+
+.pathresultbutton:active p {
+  color: white; /* Optional: Change text color on click */
+}
+
+
+
 
 /* 입력란과 버튼을 감싸는 div 요소 */
 .input-group {
-  margin-bottom: 20px;
+
 }
 
 /* 입력란과 버튼을 나란히 배치하는 스타일 */
@@ -333,4 +409,8 @@ function toRadians(degrees) {
   display: inline-block;
   vertical-align: middle;
 }
+
+
 </style>
+
+

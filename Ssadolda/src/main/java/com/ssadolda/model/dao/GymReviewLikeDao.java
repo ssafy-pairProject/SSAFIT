@@ -19,5 +19,7 @@ public interface GymReviewLikeDao {
 	 List<Gym> selectGymsByUserSeq(int userSeq);
 	 
 	 int existsByUserSeqAndGymSeq(int userSeq, int gymSeq);
+	 
+	 List<Integer> likeGymsByUserSeq(int userSeq);
 
 }
