@@ -8,6 +8,19 @@ const REST_USER_API = `http://localhost:8080/user`;
 export const useUserStore = defineStore("user", () => {
   const imgFile = ref(null);
   const isLogined = ref(false);
+  const currentUser = ref(null);
+
+  // 로그인 상태를 sessionStorage와 동기화
+  const updateLoginState = () => {
+    const token = sessionStorage.getItem("access-token");
+    if (token) {
+      isLogined.value = true;
+      currentUser.value = JSON.parse(sessionStorage.getItem("currentUser"));
+    } else {
+      isLogined.value = false;
+      currentUser.value = null;
+    }
+  };
 
   const createUser = async function (user) {
     const userToBlob = new Blob([JSON.stringify(user)], {
@@ -29,13 +42,10 @@ export const useUserStore = defineStore("user", () => {
       if (err.response && err.response.status === 400) {
         alert(err.response.data);
       } else {
-        console.log(err);
+        console.error(err);
       }
     }
   };
-
-  // const loginUserId = ref(null);
-  const currentUser = ref(null);
 
   const userLogin = async function (id, password) {
     try {
@@ -43,47 +53,33 @@ export const useUserStore = defineStore("user", () => {
         userId: id,
         password: password,
       });
-      console.log("login");
-      console.log(res);
-      console.log(res.data["access-token"]);
       sessionStorage.setItem("access-token", res.data["access-token"]);
-      console.log("testtest");
-      const tmp = sessionStorage.getItem("access-token");
-      isLogined.value = tmp != null;
-      console.log(isLogined.value);
-      // loginUserId.value = id;
-      console.log("logined");
-      //console.log(loginUserId.value);
-      //console.log(loginUserId.value !== null);
-      currentUser.value = res.data.loginUser;
-      //   .get(`${REST_USER_API}/${id}`)
-      //   .then((response) => response.data);
+      sessionStorage.setItem("currentUser", JSON.stringify(res.data.loginUser));
+      updateLoginState();
       router.push({ name: "home" });
       return true;
     } catch (err) {
-      console.log(err);
+      console.error(err);
       return false;
     }
   };
 
   const userLogout = function () {
-    console.log(sessionStorage.getItem("access-token"));
     sessionStorage.removeItem("access-token");
-    console.log(sessionStorage.getItem("access-token"));
-
-    isLogined.value = sessionStorage.getItem("access-token") != null;
-    console.log();
-    console.log(isLogined);
-
-    // loginUserId.value = null;
-    // currentUser.value = null;
-    // router.push({ name: "home" });
+    sessionStorage.removeItem("currentUser");
+    updateLoginState();
+    router.push({ name: "home" });
   };
 
-  const userUpdate = function (user) {
-    axios.put(`${REST_USER_API}/update`).then(() => {
+  const userUpdate = async function (user) {
+    try {
+      await axios.put(`${REST_USER_API}/update`, user);
+      sessionStorage.setItem("currentUser", JSON.stringify(user));
+      currentUser.value = user;
       router.push({ name: "home" });
-    });
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const checkUserId = async function (userId) {
@@ -101,9 +97,9 @@ export const useUserStore = defineStore("user", () => {
   };
 
   return {
+    updateLoginState,
     userLogin,
     userLogout,
-    // loginUserId,
     isLogined,
     createUser,
     currentUser,

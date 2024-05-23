@@ -15,8 +15,6 @@
         />
 
         <button class="pathsearchbutton" @click="searchStartPoint">검색</button>
-
-
       </div>
       <i class="bi bi-signpost"></i>
       <div id="endCSS">
@@ -37,31 +35,28 @@
         <input type="hidden" id="startlat" v-model="startLat" />
         <input type="hidden" id="endlon" v-model="endLon" />
         <input type="hidden" id="endlat" v-model="endLat" />
-        <button class="pathresultbutton" @click="displayRoute">경로 표시 </button>
+        <button class="pathresultbutton" @click="displayRoute">
+          경로 표시
+        </button>
       </div>
     </div>
-    
-    
-    
-
 
     <div>
       <input type="hidden" id="startlon" v-model="startLon" />
       <input type="hidden" id="startlat" v-model="startLat" />
       <input type="hidden" id="endlon" v-model="endLon" />
       <input type="hidden" id="endlat" v-model="endLat" />
-      <button class="pathresultbutton" @click="displayRoute">경로 표시 </button>
-       <h5  style="display: inline-block;"> 거리 : {{ totalDistance }}km  예상 도착 시간 : {{ Math.floor((totalDistance /6)*60) }} 분</h5> 
+      <h5 style="display: inline-block">
+        거리 : {{ totalDistance }}km 예상 도착 시간 :
+        {{ Math.floor((totalDistance / 6) * 60) }} 분
+      </h5>
     </div>
-
   </div>
 </template>
 
 <script setup>
+import { onMounted, ref, watch, reactive } from "vue";
 
-import { onMounted, ref,watch,reactive } from "vue";
-
-import gsap from 'gsap'
 import Iconpng from "@/assets/person-running.png";
 
 let map;
@@ -295,8 +290,8 @@ function toRadians(degrees) {
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&family=Noto+Serif+KR:wght@200..900&display=swap');
-*{
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&family=Noto+Serif+KR:wght@200..900&display=swap");
+* {
   font-family: "Noto Sans KR", sans-serif;
 }
 
@@ -311,13 +306,12 @@ function toRadians(degrees) {
 /* 경로 설정 스타일 */
 #routeCSS {
   margin: 20px 0;
-  display:flex;
+  display: flex;
 }
 
 /* 출발지, 목적지 입력란 스타일 */
 #startCSS,
 #endCSS {
- 
   width: 30%;
 }
 
@@ -334,28 +328,27 @@ function toRadians(degrees) {
 
 /* 버튼 스타일 */
 
-.pathsearchbutton{
-width : 120px;
-height:40px;
-margin-bottom: 20px;
-background-color: #512da8;
-border:none;
-color:white;
-box-shadow: 0 4px 16px rgba(0,79,255,0.3);
-font-size: 16px;
-font-weight: bold;
-border-radius: 20px;
-transition: 0.5s;
+.pathsearchbutton {
+  width: 120px;
+  height: 40px;
+  margin-bottom: 20px;
+  background-color: #512da8;
+  border: none;
+  color: white;
+  box-shadow: 0 4px 16px rgba(0, 79, 255, 0.3);
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 20px;
+  transition: 0.5s;
 }
-.pathsearchbutton:focus{
-  outline:0;
+.pathsearchbutton:focus {
+  outline: 0;
 }
-.pathsearchbutton:hover{
-  background-color:rgba(192, 175, 212, 0.895) ;
-  cursor:pointer;
-  box-shadow: 0 2px 4pxrgba(0,79,255,0.6) ;
+.pathsearchbutton:hover {
+  background-color: rgba(192, 175, 212, 0.895);
+  cursor: pointer;
+  box-shadow: 0 2px 4pxrgba (0, 79, 255, 0.6);
 }
-
 
 .pathresultbutton {
   background-color: #512da8;
@@ -366,16 +359,20 @@ transition: 0.5s;
   transition: background-color 0.5s ease;
   position: relative;
   top: 37.2px;
-  box-shadow: 0 4px 16px rgba(0,79,255,0.3);
-font-size: 16px;
-font-weight: bold;
-border-radius: 20px;
-transition: 0.5s;
-  
+  box-shadow: 0 4px 16px rgba(0, 79, 255, 0.3);
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 20px;
+  transition: 0.5s;
 }
 
 .pathresultbutton:hover {
-  background-color: rgba(192, 175, 212, 0.895); /* Optional: Change color on hover */
+  background-color: rgba(
+    192,
+    175,
+    212,
+    0.895
+  ); /* Optional: Change color on hover */
 }
 
 .pathresultbutton:active {
@@ -385,22 +382,12 @@ transition: 0.5s;
   transition: background 0.5s ease;
 }
 
-
-
-
-
-
-
 .pathresultbutton:active p {
   color: white; /* Optional: Change text color on click */
 }
 
-
-
-
 /* 입력란과 버튼을 감싸는 div 요소 */
 .input-group {
-
 }
 
 /* 입력란과 버튼을 나란히 배치하는 스타일 */
@@ -409,8 +396,4 @@ transition: 0.5s;
   display: inline-block;
   vertical-align: middle;
 }
-
-
 </style>
-
-

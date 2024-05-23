@@ -1,6 +1,13 @@
 tml 코드 복사
 <template>
   <div class="container">
+    <div class="row my-2">
+      <div class="col-12 d-flex justify-content-end">
+        <RouterLink to="/gym/regist" class="btn btn-primary"
+          >헬스장 등록</RouterLink
+        >
+      </div>
+    </div>
     <div class="row">
       <div
         v-for="(gym, index) in gymList"
@@ -53,9 +60,13 @@ tml 코드 복사
 <script setup>
 import { ref, onMounted, computed } from "vue";
 import { useGymStore } from "@/stores/gym";
+import { useLikeStore } from "@/stores/like";
+import { useUserStore } from "@/stores/user";
 
-const store = useGymStore();
-const gymList = computed(() => store.gymList);
+const gymStore = useGymStore();
+const likeStore = useLikeStore();
+const userStore = useUserStore();
+const gymList = computed(() => gymStore.gymList);
 
 const URL = "../src/assets/gymimg";
 
@@ -68,11 +79,24 @@ const getGymImage = (img) => {
   }
 };
 
-onMounted(() => {
-  store.getGymList();
+onMounted(async () => {
+  await gymStore.getGymList();
+  await likeStore.fetchLikes(userStore.currentUser.userSeq);
+  syncLikesWithGyms();
 });
 
-const toggleLike = (gym) => {
+const syncLikesWithGyms = () => {
+  gymList.value.forEach((gym) => {
+    gym.userLiked = likeStore.checkIfLiked(gym.gymSeq);
+  });
+};
+
+const toggleLike = async (gym) => {
+  if (gym.userLiked) {
+    await likeStore.unlikeGym(userStore.currentUser.userSeq, gym.gymSeq);
+  } else {
+    await likeStore.likeGym(userStore.currentUser.userSeq, gym.gymSeq);
+  }
   gym.userLiked = !gym.userLiked;
   gym.userLikeCnt += gym.userLiked ? 1 : -1;
   // 서버에 업데이트를 보내는 코드 추가 가능
