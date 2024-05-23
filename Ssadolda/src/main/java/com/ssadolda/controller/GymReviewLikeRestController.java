@@ -112,6 +112,7 @@ import com.ssadolda.service.GymReviewLikeService;
 	    // gymlike db에 저장된 정보는 헬스장번호-유저번호 데이터가 있으면 좋아요를 한거임
 	    // -> 거기서 특정 유저와 매핑된 모든 헬스장 번호들의 정보를 리스트에 담아서 가져옴
 	    	// 유저의 찜 목록
+	    
 	    @GetMapping("/reviewlist/{userSeq}")
 	    public ResponseEntity<?> getReviewLikeListByUserSeq(@PathVariable int userSeq) {
 
