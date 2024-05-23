@@ -1,28 +1,51 @@
+tml 코드 복사
 <template>
   <div class="container">
     <div class="row">
-      <RouterLink
-        :to="{ name: 'gymDetail', params: { gymSeq: gym.gymSeq } }"
+      <div
         v-for="(gym, index) in gymList"
         :key="gym.gymSeq"
         class="card my-2 col-12"
       >
-        <div class="card-body">
+        <RouterLink
+          :to="{ name: 'gymDetail', params: { gymSeq: gym.gymSeq } }"
+          class="card-body"
+        >
           <h5 class="card-title">{{ gym.gymName }}</h5>
           <p class="card-text"><strong>주소:</strong> {{ gym.gymAddress }}</p>
-          <p class="card-text"><strong>전화번호:</strong> {{ gym.gymPhoneNumber }}</p>
+          <p class="card-text">
+            <strong>전화번호:</strong> {{ gym.gymPhoneNumber }}
+          </p>
           <p class="card-text"><strong>가격(원):</strong> {{ gym.gymPrice }}</p>
-          <p class="card-text"><strong>헬스장 소개:</strong> {{ gym.gymIntroduce }}</p>
-          <p class="card-text"><strong>영업시간:</strong> {{ gym.gymOperatingHours }}</p>
-          <p class="card-text"><strong>부가 시설:</strong> {{ gym.gymAmenities }}</p>
-          <p class="card-text"><strong>추가 서비스:</strong> {{ gym.gymAdditionalService }}</p>
-          <p class="card-text"><strong>조회수:</strong> {{ gym.gymviews }}</p>
-          <span class="heart-icon" @click="toggleLike(gym)">
-            <i v-if="gym.userLiked" class="fas fa-heart"></i>
-            <i v-else class="far fa-heart"></i>
-          </span>
-        </div>
-      </RouterLink>
+          <p class="card-text">
+            <strong>헬스장 소개:</strong> {{ gym.gymIntroduce }}
+          </p>
+          <p class="card-text">
+            <strong>영업시간:</strong> {{ gym.gymOperatingHours }}
+          </p>
+          <p class="card-text">
+            <strong>부가 시설:</strong> {{ gym.gymAmenities }}
+          </p>
+          <p class="card-text">
+            <strong>추가 서비스:</strong> {{ gym.gymAdditionalService }}
+          </p>
+          <p class="card-text">
+            <strong>좋아요:</strong> {{ gym.userLikedCnt }}
+          </p>
+          <div>
+            <!-- 운동 사진 유저 이미지 동적으로 가져오기 -->
+            <!-- 사진배치랑 크기 수정 부탁드려요 -->
+            <a href="#" class="profile">
+              <img :src="getGymImage(gym.gymImg)" alt="Gym Image" />
+            </a>
+          </div>
+        </RouterLink>
+        <!-- npm install --save @fortawesome/fontawesome-free -->
+        <span class="heart-icon" @click.prevent="toggleLike(gym)">
+          <i v-if="gym.userLiked" class="fas fa-heart"></i>
+          <i v-else class="far fa-heart"></i>
+        </span>
+      </div>
     </div>
   </div>
 </template>
@@ -33,6 +56,17 @@ import { useGymStore } from "@/stores/gym";
 
 const store = useGymStore();
 const gymList = computed(() => store.gymList);
+
+const URL = "../src/assets/gymimg";
+
+const getGymImage = (img) => {
+  try {
+    return `${URL}/${img}`;
+  } catch (e) {
+    console.err(e);
+    return `${URL}/gym-default.png`;
+  }
+};
 
 onMounted(() => {
   store.getGymList();
@@ -46,11 +80,9 @@ const toggleLike = (gym) => {
 </script>
 
 <style scoped>
-
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 
 body {
- 
   margin: 0;
   padding: 0;
   height: 100vh;
@@ -58,7 +90,6 @@ body {
   justify-content: center;
   align-items: center;
 }
-
 
 .container {
   display: flex;
@@ -87,13 +118,16 @@ body {
 }
 
 .card:hover {
-  box-shadow: rgba(240, 46, 170, 0.4) 5px 5px, rgba(240, 46, 170, 0.3) 10px 10px, rgba(240, 46, 170, 0.2) 15px 15px, rgba(240, 46, 170, 0.1) 20px 20px, rgba(240, 46, 170, 0.05) 25px 25px;}
+  box-shadow: rgba(240, 46, 170, 0.4) 5px 5px, rgba(240, 46, 170, 0.3) 10px 10px,
+    rgba(240, 46, 170, 0.2) 15px 15px, rgba(240, 46, 170, 0.1) 20px 20px,
+    rgba(240, 46, 170, 0.05) 25px 25px;
+}
 
 .card-body {
   width: calc(100% - 26px);
   display: grid;
   cursor: pointer;
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   padding-top: 8px;
   padding-bottom: 8px;
   margin: 8px 13px;

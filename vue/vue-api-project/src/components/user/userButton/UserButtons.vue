@@ -128,7 +128,7 @@ const password = ref("");
 
 const store = useUserStore();
 const router = useRouter();
-const emit = defineEmits(["hide-buttons"]);
+// const emit = defineEmits(["hide-buttons"]);
 const isSignUpActive = ref(false);
 
 const isUserIdChecked = ref(false);
@@ -164,7 +164,7 @@ const handleSignup = () => {
   if (isUserIdAvailable.value) {
     store.createUser(signupUser.value);
     isSignUpActive.value = false; // 회원가입 완료 후 로그인 폼으로 전환
-    emit("hide-buttons");
+    // emit("hide-buttons");
   } else {
     alert("아이디 중복 체크를 해주세요.");
   }
@@ -175,7 +175,7 @@ const handleLogin = async () => {
   if (!loginSuccess) {
     alert("아이디나 비밀번호를 다시 한 번 확인하세요");
   } else {
-    emit("hide-buttons");
+    // emit("hide-buttons");
     alert(`${store.currentUser.nickname} 님 환영합니다!`); // 로그인 성공 시 환영 메시지
   }
 };

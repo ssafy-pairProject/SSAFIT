@@ -7,6 +7,7 @@ const REST_USER_API = `http://localhost:8080/user`;
 
 export const useUserStore = defineStore("user", () => {
   const imgFile = ref(null);
+  const isLogined = ref(false);
 
   const createUser = async function (user) {
     const userToBlob = new Blob([JSON.stringify(user)], {
@@ -33,7 +34,7 @@ export const useUserStore = defineStore("user", () => {
     }
   };
 
-  const loginUserId = ref(null);
+  // const loginUserId = ref(null);
   const currentUser = ref(null);
 
   const userLogin = async function (id, password) {
@@ -42,11 +43,21 @@ export const useUserStore = defineStore("user", () => {
         userId: id,
         password: password,
       });
+      console.log("login");
+      console.log(res);
+      console.log(res.data["access-token"]);
       sessionStorage.setItem("access-token", res.data["access-token"]);
-      loginUserId.value = id;
-      currentUser.value = await axios
-        .get(`${REST_USER_API}/${id}`)
-        .then((response) => response.data);
+      console.log("testtest");
+      const tmp = sessionStorage.getItem("access-token");
+      isLogined.value = tmp != null;
+      console.log(isLogined.value);
+      // loginUserId.value = id;
+      console.log("logined");
+      //console.log(loginUserId.value);
+      //console.log(loginUserId.value !== null);
+      currentUser.value = res.data.loginUser;
+      //   .get(`${REST_USER_API}/${id}`)
+      //   .then((response) => response.data);
       router.push({ name: "home" });
       return true;
     } catch (err) {
@@ -56,17 +67,17 @@ export const useUserStore = defineStore("user", () => {
   };
 
   const userLogout = function () {
-    axios
-      .get(`${REST_USER_API}/logout`, {})
-      .then(() => {
-        sessionStorage.removeItem("access-token");
-        loginUserId.value = null;
-        currentUser.value = null;
-        router.push({ name: "home" });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    console.log(sessionStorage.getItem("access-token"));
+    sessionStorage.removeItem("access-token");
+    console.log(sessionStorage.getItem("access-token"));
+
+    isLogined.value = sessionStorage.getItem("access-token") != null;
+    console.log();
+    console.log(isLogined);
+
+    // loginUserId.value = null;
+    // currentUser.value = null;
+    // router.push({ name: "home" });
   };
 
   const userUpdate = function (user) {
@@ -92,7 +103,8 @@ export const useUserStore = defineStore("user", () => {
   return {
     userLogin,
     userLogout,
-    loginUserId,
+    // loginUserId,
+    isLogined,
     createUser,
     currentUser,
     userUpdate,

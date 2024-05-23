@@ -1,8 +1,9 @@
 <template>
   <div class="container">
     <h2>로그아웃</h2>
-    <p>안전하게 로그아웃 되었습니다.</p>
-    <button @click="goHome" class="btn btn-primary mt-3">홈으로가기</button>
+    <p>정말로 로그아웃 하시겠습니까?</p>
+    <button @click="doLogOut" class="btn btn-primary mt-3">예</button>
+    <button @click="prev" class="btn btn-primary mt-3">아니요</button>
   </div>
 </template>
 
@@ -13,10 +14,14 @@ import { useUserStore } from "@/stores/user";
 const router = useRouter();
 const store = useUserStore();
 
-store.userLogout();
-
-const goHome = () => {
+// store.userLogout();
+const doLogOut = () => {
+  store.userLogout();
   router.push({ name: "home" });
+};
+
+const prev = () => {
+  history.back();
 };
 </script>
 

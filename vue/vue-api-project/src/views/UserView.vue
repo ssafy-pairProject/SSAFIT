@@ -1,22 +1,22 @@
 <template>
   <div class="container">
     <h2>User View</h2>
-    <UserButtons v-if="showButtons" @hide-buttons="hideButtons" />
-    <router-view v-else></router-view>
+    {{ isLoggedIn }}
+    <UserButtons v-if="!isLoggedIn" />
+    <!-- <router-view v-else></router-view> -->
+    <UserLogout v-if="isLoggedIn" />
   </div>
- 
 </template>
 
 <script setup>
-import { ref } from "vue";
-import { useRouter } from "vue-router"; // 라우터 사용
+import { ref, computed } from "vue";
+import { useUserStore } from "@/stores/user";
 import UserButtons from "@/components/user/userButton/UserButtons.vue";
+import UserLogout from "@/components/user/UserLogout.vue";
 
-const showButtons = ref(true); // 버튼 표시 여부를 제어하는 상태
+const store = useUserStore();
 
-const hideButtons = () => {
-  showButtons.value = false;
-};
+const isLoggedIn = computed(() => store.isLogined);
 </script>
 
 <style scoped>
