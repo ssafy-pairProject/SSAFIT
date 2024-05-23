@@ -4,7 +4,7 @@
       <form @submit.prevent="handleSignup">
         <h1>회원가입</h1>
         <span>짐싸의 회원이 되어 보세요!</span>
-        <div>
+        <div class="input-group mb-3">
           <input
             type="text"
             class="form-control"
@@ -13,9 +13,21 @@
             v-model="signupUser.userId"
             @input="resetUserIdCheck"
           />
-          <button class="btn btn-outline-secondary" type="button" @click="checkUserId">중복 체크</button>
+          <button
+            class="btn btn-outline-secondary"
+            type="button"
+            @click="checkUserIdAvailability"
+          >
+            중복 체크
+          </button>
         </div>
-        <div v-if="isUserIdChecked" :class="{'text-success': isUserIdAvailable, 'text-danger': !isUserIdAvailable}">
+        <div
+          v-if="isUserIdChecked"
+          :class="{
+            'text-success': isUserIdAvailable,
+            'text-danger': !isUserIdAvailable,
+          }"
+        >
           {{ userIdCheckMessage }}
         </div>
         <input
@@ -48,8 +60,14 @@
           placeholder="닉네임"
           v-model="signupUser.nickname"
         />
-        <input multiple @change="imageUpload($event)" ref="images" type="file"/>
-        <button type="submit">Sign Up</button>
+        <input
+          multiple
+          @change="imageUpload($event)"
+          ref="images"
+          type="file"
+        />
+
+        <button type="submit" :disabled="!isUserIdAvailable">Sign Up</button>
       </form>
     </div>
 
@@ -69,7 +87,6 @@
           v-model="password"
           required
         />
-        <!-- <a href="#">Forgot Your Password?</a> -->
         <button type="submit">Sign In</button>
       </form>
     </div>
@@ -103,7 +120,7 @@ const signupUser = ref({
   phoneNumber: "",
   name: "",
   nickname: "",
-  img:"",
+  img: "",
 });
 
 const id = ref("");
@@ -122,18 +139,34 @@ const setActive = (isActive) => {
   isSignUpActive.value = isActive;
 };
 
-const imageUpload = (event) =>{
-  console.log(event.target.files[0]);
-  //pinia에 있는 변수를 바꾸기 
-  // 달러 현재발생한 도큐멘트에서 발생한 change 이벤트를가져옴
-  store.imgFile=event.target.files[0];
-}
+const imageUpload = (event) => {
+  store.imgFile = event.target.files[0];
+};
+
+const resetUserIdCheck = () => {
+  isUserIdChecked.value = false;
+  isUserIdAvailable.value = false;
+  userIdCheckMessage.value = "";
+};
+
+const checkUserIdAvailability = async () => {
+  const message = await store.checkUserId(signupUser.value.userId);
+  isUserIdChecked.value = true;
+  if (message === "사용 가능한 아이디입니다.") {
+    isUserIdAvailable.value = true;
+  } else {
+    isUserIdAvailable.value = false;
+  }
+  userIdCheckMessage.value = message;
+};
 
 const handleSignup = () => {
   if (isUserIdAvailable.value) {
-  store.createUser(signupUser.value);
-  isSignUpActive.value = false; // 회원가입 완료 후 로그인 폼으로 전환
-  emit("hide-buttons");
+    store.createUser(signupUser.value);
+    isSignUpActive.value = false; // 회원가입 완료 후 로그인 폼으로 전환
+    emit("hide-buttons");
+  } else {
+    alert("아이디 중복 체크를 해주세요.");
   }
 };
 
@@ -145,18 +178,6 @@ const handleLogin = async () => {
     emit("hide-buttons");
     alert(`${store.currentUser.nickname} 님 환영합니다!`); // 로그인 성공 시 환영 메시지
   }
-};
-
-const checkUserId = async () => {
-  const response = await store.checkUserId(signupUser.value.userId);
-  isUserIdChecked.value = true;
-  isUserIdAvailable.value = response.isAvailable;
-  userIdCheckMessage.value = response.message;
-};
-
-const resetUserIdCheck = () => {
-  isUserIdChecked.value = false;
-  userIdCheckMessage.value = "";
 };
 </script>
 

@@ -1,4 +1,4 @@
-import { ref, computed } from "vue";
+import { ref } from "vue";
 import { defineStore } from "pinia";
 import router from "@/router";
 import axios from "axios";
@@ -8,61 +8,33 @@ const REST_USER_API = `http://localhost:8080/user`;
 export const useUserStore = defineStore("user", () => {
   const imgFile = ref(null);
 
-
-  const createUser = function (user) {
-
-    console.log(user)
-    console.log(imgFile.value)
-
-    //user를 json형태의 blob으로 바꿈 
+  const createUser = async function (user) {
     const userToBlob = new Blob([JSON.stringify(user)], {
-      type: 'application/json'
-    })
+      type: "application/json",
+    });
 
-    //formData 만듬 
-    var formData = new FormData()
-
-    //blob형태가 된 user에 이미지를 넣어주기위해
+    var formData = new FormData();
     formData.append("user", userToBlob);
-    // 파일의 다양한 데이터 자체를 전달 
-    // 파일 그자체
     formData.append("imgFile", imgFile.value);
 
-
-    console.log(formData);
-    // URL 목적지 -> 데이터 -> 헤더영역 전달
-    axios.post(`${REST_USER_API}/signup`, formData,  {
-      headers: {
-        "Content-Type": `multipart/form-data`
-      }
-    })
-      .then(() => {
-        router.push({ name: "home" });
-      })
-      .catch((err) => {
-        console.log(err);
+    try {
+      await axios.post(`${REST_USER_API}/signup`, formData, {
+        headers: {
+          "Content-Type": `multipart/form-data`,
+        },
       });
-  
-    
-    // axios({
-    //   url: `${REST_USER_API}/signup`,
-    //   method: "POST",
-    //   data: formData,
-    //   headers: {
-    //     "Content-Type": `multipart/form-data`
-    //   }
-    // })
-    //   .then(() => {
-    //     router.push({ name: "home" });
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
-
+      router.push({ name: "home" });
+    } catch (err) {
+      if (err.response && err.response.status === 400) {
+        alert(err.response.data);
+      } else {
+        console.log(err);
+      }
+    }
   };
 
   const loginUserId = ref(null);
-  const currentUser = ref(null); // 현재 로그인한 사용자 정보
+  const currentUser = ref(null);
 
   const userLogin = async function (id, password) {
     try {
@@ -71,32 +43,25 @@ export const useUserStore = defineStore("user", () => {
         password: password,
       });
       sessionStorage.setItem("access-token", res.data["access-token"]);
-      const token = res.data["access-token"].split(".");
-      // let userId = JSON.parse(atob(token[1]))["id"];
-      console.log("here");
-      console.log(userId);
       loginUserId.value = id;
-
-      // 로그인 성공 시 사용자 정보 설정
       currentUser.value = await axios
         .get(`${REST_USER_API}/${id}`)
         .then((response) => response.data);
-
       router.push({ name: "home" });
-      return true; // 로그인 성공 시 true 반환
+      return true;
     } catch (err) {
       console.log(err);
-      return false; // 로그인 실패 시 false 반환
+      return false;
     }
   };
 
   const userLogout = function () {
     axios
       .get(`${REST_USER_API}/logout`, {})
-      .then((res) => {
+      .then(() => {
         sessionStorage.removeItem("access-token");
         loginUserId.value = null;
-        currentUser.value = null; // 로그아웃 시 사용자 정보 초기화
+        currentUser.value = null;
         router.push({ name: "home" });
       })
       .catch((err) => {
@@ -110,13 +75,28 @@ export const useUserStore = defineStore("user", () => {
     });
   };
 
+  const checkUserId = async function (userId) {
+    try {
+      const response = await axios.get(`${REST_USER_API}/${userId}`);
+      if (response.status === 200 && typeof response.data === "string") {
+        return response.data;
+      } else {
+        return "이미 존재하는 아이디입니다!";
+      }
+    } catch (error) {
+      console.error("Error checking user ID:", error);
+      return "오류 발생";
+    }
+  };
+
   return {
     userLogin,
     userLogout,
     loginUserId,
     createUser,
-    currentUser, // currentUser 반환
+    currentUser,
     userUpdate,
     imgFile,
+    checkUserId,
   };
 });

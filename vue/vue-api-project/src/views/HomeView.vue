@@ -2,11 +2,11 @@
   <div class="content">
     <!-- Navbar -->
     <nav>
-      <!-- 프로필 사진 유저 이미지 동적으로 가져오기 -->  
+      <!-- 프로필 사진 유저 이미지 동적으로 가져오기 -->
       <a href="#" class="profile">
-        <img src='@/assets/image.png'>
+        <img :src="profileImage" alt="Profile Image" />
       </a>
-      <h2>Best SSAFY MAN Kim Yeon Dong! </h2>
+      <h2>{{ currentUserName }}님! GymSSA 방문을 환영합니다.</h2>
     </nav>
 
     <!-- Main Content -->
@@ -14,29 +14,27 @@
       <div class="header">
         <div class="left">
           <h1>Today's News</h1>
-
         </div>
-     
       </div>
-
+      <!-- C:\SSAFIT\vue\vue-api-project\src\assets\userimg\default.png -->
       <!-- Insights -->
       <ul class="insights">
         <li>
-          <img src='@/assets/icons/userCount.png' style width="70px">
+          <img src="@/assets/icons/userCount.png" style width="70px" />
           <span class="info">
-            <h3>1,074</h3>
+            <h3>{{ storeStats.userCnt }}</h3>
             <p>With GymSSA</p>
           </span>
         </li>
         <li>
-          <img src='@/assets/icons/gym.png' style width="70px">
+          <img src="@/assets/icons/gym.png" style width="70px" />
           <span class="info">
-            <h3>110</h3>
+            <h3>{{ storeStats.gymCnt }}</h3>
             <p>Gyms</p>
           </span>
         </li>
         <li>
-          <img src='@/assets/icons/visitCount.png' style width="70px">
+          <img src="@/assets/icons/visitCount.png" style width="70px" />
           <span class="info">
             <h3>3,944</h3>
             <p>Site Visit</p>
@@ -48,10 +46,10 @@
       <div class="bottom-data">
         <div class="orders">
           <div class="header">
-            <i class='bx bx-receipt'></i>
+            <i class="bx bx-receipt"></i>
             <h3>Recent Orders</h3>
-            <i class='bx bx-filter'></i>
-            <i class='bx bx-search'></i>
+            <i class="bx bx-filter"></i>
+            <i class="bx bx-search"></i>
           </div>
           <table>
             <thead>
@@ -64,7 +62,7 @@
             <tbody>
               <tr>
                 <td>
-                  <img src="@/assets/person-running.png">
+                  <img src="@/assets/person-running.png" />
                   <p>John Doe</p>
                 </td>
                 <td>14-08-2023</td>
@@ -72,7 +70,7 @@
               </tr>
               <tr>
                 <td>
-                  <img src="@/assets/person-running.png">
+                  <img src="@/assets/person-running.png" />
                   <p>John Doe</p>
                 </td>
                 <td>14-08-2023</td>
@@ -80,7 +78,7 @@
               </tr>
               <tr>
                 <td>
-                  <img src="@/assets/person-running.png">
+                  <img src="@/assets/person-running.png" />
                   <p>John Doe</p>
                 </td>
                 <td>14-08-2023</td>
@@ -93,32 +91,32 @@
         <!-- Reminders -->
         <div class="reminders">
           <div class="header">
-            <i class='bx bx-note'></i>
+            <i class="bx bx-note"></i>
             <h3>Reminders</h3>
-            <i class='bx bx-filter'></i>
-            <i class='bx bx-plus'></i>
+            <i class="bx bx-filter"></i>
+            <i class="bx bx-plus"></i>
           </div>
           <ul class="task-list">
             <li class="completed">
               <div class="task-title">
-                <i class='bx bx-check-circle'></i>
+                <i class="bx bx-check-circle"></i>
                 <p>Start Our Meeting</p>
               </div>
-              <i class='bx bx-dots-vertical-rounded'></i>
+              <i class="bx bx-dots-vertical-rounded"></i>
             </li>
             <li class="completed">
               <div class="task-title">
-                <i class='bx bx-check-circle'></i>
+                <i class="bx bx-check-circle"></i>
                 <p>Analyse Our Site</p>
               </div>
-              <i class='bx bx-dots-vertical-rounded'></i>
+              <i class="bx bx-dots-vertical-rounded"></i>
             </li>
             <li class="not-completed">
               <div class="task-title">
-                <i class='bx bx-x-circle'></i>
+                <i class="bx bx-x-circle"></i>
                 <p>Play Football</p>
               </div>
-              <i class='bx bx-dots-vertical-rounded'></i>
+              <i class="bx bx-dots-vertical-rounded"></i>
             </li>
           </ul>
         </div>
@@ -129,33 +127,61 @@
 </template>
 
 <script setup>
+import { computed } from "vue";
+import { useUserStore } from "@/stores/user";
+import { useStatsStore } from "@/stores/stats";
 
+const store = useUserStore();
+const storeStats = useStatsStore();
 
+storeStats.getGymCnt();
+storeStats.getUserCnt();
+
+const currentUserName = computed(() => store.currentUser?.name || "사용자");
+
+const URL = "C:/SSAFIT/vue/vue-api-project/src/assets/userimg";
+// C:/SSAFIT/vue/vue-api-project/src/assets/userimg/
+// default.png를 쓰거나 사용자의 파일을 가져다가 놓거나
+// 동적으로 이미지를 가져오는 함수
+const getProfileImage = (img) => {
+  try {
+    return `${URL}/${img}`;
+  } catch (e) {
+    console.err(e);
+    return `${URL}/default.png`;
+  }
+};
+
+const profileImage = computed(() => {
+  const img = store.currentUser?.img || "default.png";
+  console.log(img);
+  return getProfileImage(img);
+});
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap");
 
 :root {
   --light: #f6f6f9;
-  --primary: #1976D2;
-  --light-primary: #CFE8FF;
+  --primary: #1976d2;
+  --light-primary: #cfe8ff;
   --grey: #eee;
-  --dark-grey: #AAAAAA;
+  --dark-grey: #aaaaaa;
   --dark: #363949;
-  --danger: #D32F2F;
-  --light-danger: #FECDD3;
-  --warning: #FBC02D;
-  --light-warning: #FFF2C6;
-  --success: #388E3C;
-  --light-success: #BBF7D0;
+  --danger: #d32f2f;
+  --light-danger: #fecdd3;
+  --warning: #fbc02d;
+  --light-warning: #fff2c6;
+  --success: #388e3c;
+  --light-success: #bbf7d0;
 }
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 .bx {
@@ -224,8 +250,6 @@ body {
   cursor: pointer;
   color: var(--dark);
 }
-
-
 
 .content nav .profile img {
   width: 90px;
@@ -297,8 +321,6 @@ body {
   align-items: center;
   grid-gap: 24px;
 }
-
-
 
 .content main .insights li .info h3 {
   font-size: 1.5rem;
