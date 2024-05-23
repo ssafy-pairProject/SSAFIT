@@ -35,7 +35,7 @@ import com.ssadolda.service.GymReviewLikeService;
 	        try {
 	        	// 좋아요 이미 눌렀는지 체크
 	            if (gymReviewLikeService.isUserLikedGym(userSeq, gymSeq)) {
-	                return new ResponseEntity<String>("이미 좋아요 눌려있어요", HttpStatus.BAD_REQUEST);
+	                return new ResponseEntity<String>("alreadyLiked",HttpStatus.OK);
 	            }
 	            HashMap<String, Integer> map = new HashMap<>();
 
@@ -62,7 +62,7 @@ import com.ssadolda.service.GymReviewLikeService;
 	        try {
 	        	// 좋아요 눌러져있었는지 체크
 	            if (!gymReviewLikeService.isUserLikedGym(userSeq, gymSeq)) {
-	                return new ResponseEntity<String>("아직 좋아요 안눌렀어요", HttpStatus.BAD_REQUEST);
+	                return new ResponseEntity<String>("notLiked", HttpStatus.OK);
 	            }
 	            HashMap<String, Integer> map = new HashMap<>();
 
@@ -112,6 +112,7 @@ import com.ssadolda.service.GymReviewLikeService;
 	    // gymlike db에 저장된 정보는 헬스장번호-유저번호 데이터가 있으면 좋아요를 한거임
 	    // -> 거기서 특정 유저와 매핑된 모든 헬스장 번호들의 정보를 리스트에 담아서 가져옴
 	    	// 유저의 찜 목록
+	    
 	    @GetMapping("/reviewlist/{userSeq}")
 	    public ResponseEntity<?> getReviewLikeListByUserSeq(@PathVariable int userSeq) {
 
@@ -126,6 +127,9 @@ import com.ssadolda.service.GymReviewLikeService;
 	            return exceptionHandling(e);
 	        }
 	    }
+	    
+	    // 유저가 어디 헬스장에 찜했는지 헬스장리스트
+	    // 좋아요 눌렀는지 안눌렀는지 체크 
 
 	    
 

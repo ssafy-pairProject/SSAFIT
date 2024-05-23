@@ -1,7 +1,23 @@
 <template>
-  <h3>GPT4로 러닝 최적의 경로를 받아봐요</h3>
+  <h3>감사합니다</h3>
+  <input v:number/>
+<p>{{ tweened.number.toFixed(0) }}</p>
 </template>
 
-<script setup></script>
+
+<script setup>
+import { ref, reactive, watch } from 'vue'
+import gsap from 'gsap'
+
+const number = ref(0)
+const tweened = reactive({
+  number: 0
+})
+
+watch(number, (n) => {
+  gsap.to(tweened, { duration: 0.5, number: Number(n) || 0 })
+})
+
+</script>
 
 <style scoped></style>

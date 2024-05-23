@@ -14,7 +14,7 @@
           :class="{ filled: star <= rating }"
           @click="setRating(star)"
           class="star"
-          >★</span
+          ><i class="bi bi-star-fill"></i></span
         >
       </div>
       <button type="submit" class="submit-button">리뷰등록</button>
@@ -114,7 +114,8 @@ h3{
   display: block;
   width: 100%;
   padding: 10px;
-  background-color: #512da8;
+  background-color: #6a48b9;
+
   color: #fff;
   border: none;
   border-radius: 4px;
@@ -123,7 +124,7 @@ h3{
 }
 
 .submit-button:hover {
-  background-color: #218838;
+  background-color: #512da8;
 }
 </style>
 

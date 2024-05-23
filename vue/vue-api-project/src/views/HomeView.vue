@@ -143,10 +143,14 @@ const currentUserName = computed(() => store.currentUser?.name || "사용자");
 
 const URL = "./src/assets/userimg";
 
+
+
 // default.png를 쓰거나 사용자의 파일을 가져다가 놓거나
 // 동적으로 이미지를 가져오는 함수
 const profileImage = computed(() => {
   const img = store.currentUser?.img || "default.png";
+
+
   return getProfileImage(img);
 });
 
@@ -158,6 +162,8 @@ const getProfileImage = (img) => {
     return `${URL}/default.png`;
   }
 };
+
+
 </script>
 
 <style scoped>
