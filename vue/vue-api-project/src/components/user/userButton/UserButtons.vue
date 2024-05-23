@@ -4,7 +4,7 @@
       <form @submit.prevent="handleSignup">
         <h1>회원가입</h1>
         <span>짐싸의 회원이 되어 보세요!</span>
-        <div class="input-group mb-3">
+        <div>
           <input
             type="text"
             class="form-control"
@@ -14,7 +14,7 @@
             @input="resetUserIdCheck"
           />
           <button
-            class="btn btn-outline-secondary"
+            class="duplicationCheckButton"
             type="button"
             @click="checkUserIdAvailability"
           >
@@ -189,6 +189,10 @@ const handleLogin = async () => {
   padding: 0;
   box-sizing: border-box;
   font-family: "Montserrat", sans-serif;
+}
+
+.duplicationCheckButton{
+  width: 100%;
 }
 
 body {

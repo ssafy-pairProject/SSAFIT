@@ -20,5 +20,7 @@ public interface GymReviewLikeService {
 	void decreaseLike(int gymSeq); // ""           에서 감소
 	
 	boolean isUserLikedGym(int userSeq, int gymSeq);
+	
+	List<Integer> likeGymsByUserSeq(int userSeq);
 
 }
