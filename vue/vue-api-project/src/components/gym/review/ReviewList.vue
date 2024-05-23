@@ -9,7 +9,7 @@
           <th>평점</th>
           <th>작성자</th>
           <th>등록일</th>
-          <th>삭제</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -104,8 +104,12 @@ const handleDelete = async (reviewSeq) => {
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&family=Noto+Serif+KR:wght@200..900&display=swap');
+*{
+  font-family: "Noto Sans KR", sans-serif;
+}
 .container {
-  max-width: 800px;
+  max-width: 1000px;
   margin: 0 auto;
 }
 

@@ -13,7 +13,7 @@
           placeholder="검색어를 입력해주세요"
           v-model="startPoint"
         />
-        <button class="btn btn-primary" @click="searchStartPoint">검색</button>
+        <button class="btn" @click="searchStartPoint">검색</button>
       </div>
       <div>{{ startLon }} {{ startLat }}</div>
       <div id="endCSS">
@@ -25,16 +25,18 @@
           placeholder="검색어를 입력해주세요"
           v-model="endPoint"
         />
-        <button class="btn btn-primary" @click="searchEndPoint">검색</button>
+        <button class="btn" @click="searchEndPoint">검색</button>
         <div>{{ endLon }} {{ endLat }}</div>
       </div>
     </div>
+
+
 
     <input type="hidden" id="startlon" v-model="startLon" />
     <input type="hidden" id="startlat" v-model="startLat" />
     <input type="hidden" id="endlon" v-model="endLon" />
     <input type="hidden" id="endlat" v-model="endLat" />
-    <button class="btn btn-primary" @click="displayRoute">경로 표시</button>
+    <button class="resultbutton" @click="displayRoute"><p>경로 표시</p> </button>
     <div>
       {{ totalDistance }}km {{ totalDistance * 1000 }} m의 경로가
       표시되었습니다.
@@ -277,11 +279,16 @@ function toRadians(degrees) {
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&family=Noto+Serif+KR:wght@200..900&display=swap');
+*{
+  font-family: "Noto Sans KR", sans-serif;
+}
+
 /* 지도 스타일 */
 #map_div {
   width: 100%;
   height: 500px;
-  border-radius: 10px;
+  border-radius: 0px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -307,20 +314,10 @@ function toRadians(degrees) {
 }
 
 /* 버튼 스타일 */
-.btn-primary {
-  padding: 10px 20px;
-  background-color: #4caf50;
-  border: none;
-  border-radius: 5px;
-  color: white;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s ease;
-}
 
-.btn-primary:hover {
-  background-color: #45a049;
-}
+
+
+
 
 /* 입력란과 버튼을 감싸는 div 요소 */
 .input-group {
@@ -334,3 +331,5 @@ function toRadians(degrees) {
   vertical-align: middle;
 }
 </style>
+
+
