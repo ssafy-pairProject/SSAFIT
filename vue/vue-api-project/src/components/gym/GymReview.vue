@@ -1,12 +1,12 @@
 <template>
   <div>
 
-    <ReviewCreate @review-added="fetchReviews" :gym-seq="gymSeq" />
     <ReviewList
-      :reviews="reviews"
-      @review-deleted="fetchReviews"
-      :gym-seq="gymSeq"
+    :reviews="reviews"
+    @review-deleted="fetchReviews"
+    :gym-seq="gymSeq"
     />
+    <ReviewCreate @review-added="fetchReviews" :gym-seq="gymSeq" />
     <div v-if="errorMessage">{{ errorMessage }}</div>
   </div>
 </template>
