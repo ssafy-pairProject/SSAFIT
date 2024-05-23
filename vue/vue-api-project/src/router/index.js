@@ -22,6 +22,7 @@ import ReviewUpdate from "@/components/gym/review/ReviewList.vue";
 import ReviewDetail from "@/components/gym/review/ReviewDetail.vue";
 
 import UserButtons from "@/components/user/userButton/UserButtons.vue";
+import MypageView from "@/views/MypageView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -40,6 +41,11 @@ const router = createRouter({
       path: "/tmap",
       name: "tmap",
       component: TmapView,
+    },
+    {
+      path: "/mypage",
+      name: "mypage",
+      component: MypageView,
     },
     {
       path: "/gym",
@@ -81,11 +87,6 @@ const router = createRouter({
                   name: "reviewCreate",
                   component: ReviewCreate,
                 },
-                // {
-                //   path: "",
-                //   name: "reviewSearchInput",
-                //   component: ReviewUpdate,
-                // },
                 {
                   path: "update",
                   name: "reviewUpdate",
@@ -116,11 +117,6 @@ const router = createRouter({
           path: "login",
           name: "userLogin",
           component: UserButtons,
-        },
-        {
-          path: "detail",
-          name: "userDetail",
-          component: UserDetail,
         },
 
         // 안전하게 로그아웃이 되었습니다. 띄우고 다시 돌아가기

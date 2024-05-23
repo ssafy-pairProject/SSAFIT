@@ -8,14 +8,16 @@
           ><i class="bi bi-play-btn-fill"></i>Youtube</RouterLink
         >
         <RouterLink :to="{ name: 'tmap' }"
-          ><i class="bi bi-person-walking"></i>Tmap exercise</RouterLink
+          ><i class="bi bi-person-walking"></i>Tmap Running</RouterLink
         >
         <RouterLink :to="{ name: 'gym' }"
           ><i class="bi bi-list-ul"></i>GymList</RouterLink
         >
-        <RouterLink :to="{ name: 'user' }"
-          ><i class="bi bi-person-vcard"></i>MyPage</RouterLink
+        <RouterLink :to="{ name: 'mypage' }"
+          ><i class="bi bi-person-vcard"></i>myLikeList</RouterLink
         >
+
+        <!-- {{ test }} -->
         <RouterLink v-if="!isLoggedIn" :to="{ name: 'userLogin' }"
           ><i class="bi bi-person"></i>Login</RouterLink
         >
@@ -33,7 +35,14 @@ import { useUserStore } from "@/stores/user";
 
 const store = useUserStore();
 
-const isLoggedIn = computed(() => store.loginUserId !== null);
+// const isLoggedIn = computed(() => {
+//   return store.isLogined;
+// });
+
+let isLoggedIn = sessionStorage.getItem("access-token") != null;
+isLoggedIn = computed(() => {
+  return store.isLogined;
+});
 </script>
 
 <style scoped>
