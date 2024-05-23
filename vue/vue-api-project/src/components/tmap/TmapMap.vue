@@ -13,7 +13,9 @@
           placeholder="검색어를 입력해주세요"
           v-model="startPoint"
         />
+
         <button class="pathsearchbutton" @click="searchStartPoint">검색</button>
+
 
       </div>
       <i class="bi bi-signpost"></i>
@@ -26,6 +28,7 @@
           placeholder="검색어를 입력해주세요"
           v-model="endPoint"
         />
+
         <button class="pathsearchbutton" @click="searchEndPoint">검색</button>
         <!-- <div>{{ endLon }} {{ endLat }}</div> -->
       </div>
@@ -40,7 +43,17 @@
     
     
     
-    <h5  style="display: inline-block;"> 거리 : {{ totalDistance }}km  <br>예상 도착 시간 : {{ Math.floor((totalDistance /6)*60) }} 분</h5> 
+
+
+    <div>
+      <input type="hidden" id="startlon" v-model="startLon" />
+      <input type="hidden" id="startlat" v-model="startLat" />
+      <input type="hidden" id="endlon" v-model="endLon" />
+      <input type="hidden" id="endlat" v-model="endLat" />
+      <button class="pathresultbutton" @click="displayRoute">경로 표시 </button>
+       <h5  style="display: inline-block;"> 거리 : {{ totalDistance }}km  예상 도착 시간 : {{ Math.floor((totalDistance /6)*60) }} 분</h5> 
+    </div>
+
   </div>
 </template>
 
@@ -320,6 +333,7 @@ function toRadians(degrees) {
 }
 
 /* 버튼 스타일 */
+
 .pathsearchbutton{
 width : 120px;
 height:40px;
@@ -370,6 +384,12 @@ transition: 0.5s;
   color: black rgba(116, 199, 200, 0.5); /* Optional: Change text color on click */
   transition: background 0.5s ease;
 }
+
+
+
+
+
+
 
 .pathresultbutton:active p {
   color: white; /* Optional: Change text color on click */
