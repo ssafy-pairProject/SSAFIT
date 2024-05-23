@@ -10,7 +10,7 @@
         <RouterLink :to="{ name: 'tmap' }"
           ><i class="bi bi-person-walking"></i>Tmap exercise</RouterLink
         >
-        <RouterLink :to="{ name: 'gym' }"
+        <RouterLink :to="{ name: 'gymList' }"
           ><i class="bi bi-list-ul"></i>GymList</RouterLink
         >
         <RouterLink :to="{ name: 'mypage' }"

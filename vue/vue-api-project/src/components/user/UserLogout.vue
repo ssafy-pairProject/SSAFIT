@@ -14,7 +14,6 @@ import { useUserStore } from "@/stores/user";
 const router = useRouter();
 const store = useUserStore();
 
-// store.userLogout();
 const doLogOut = () => {
   store.userLogout();
   router.push({ name: "home" });
