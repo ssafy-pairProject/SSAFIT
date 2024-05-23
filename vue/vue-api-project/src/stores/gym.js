@@ -6,25 +6,23 @@ import router from "@/router";
 const REST_GYM_API = `http://localhost:8080/gym`;
 
 export const useGymStore = defineStore("gym", () => {
-
   const gymImg = ref(null);
   const createGym = function (gym) {
-
     const gymToBlob = new Blob([JSON.stringify(gym)], {
-      type: 'application/json'
-    })
+      type: "application/json",
+    });
 
-    var formData = new FormData()
+    var formData = new FormData();
 
     formData.append("gym", gymToBlob);
     formData.append("gymImg", gymImg.value);
 
-    
-    axios.post(`${REST_GYM_API}/regist`, formData,  {
-      headers: {
-        "Content-Type": `multipart/form-data`
-      }
-    })
+    axios
+      .post(`${REST_GYM_API}/regist`, formData, {
+        headers: {
+          "Content-Type": `multipart/form-data`,
+        },
+      })
       .then(() => {
         router.push({ name: "gymList" });
       })
@@ -71,16 +69,6 @@ export const useGymStore = defineStore("gym", () => {
         console.log(err);
       });
   };
-
-  // const searchBoardList = function (searchCondition) {
-  //   axios
-  //     .get(REST_BOARD_API, {
-  //       params: searchCondition,
-  //     })
-  //     .then((res) => {
-  //       boardList.value = res.data;
-  //     });
-  // };
 
   return {
     createGym,

@@ -16,7 +16,7 @@
           <button
             class="btn btn-outline-secondary"
             type="button"
-            @click="checkUserId"
+            @click="checkUserIdAvailability"
           >
             중복 체크
           </button>
@@ -87,7 +87,6 @@
           v-model="password"
           required
         />
-        <!-- <a href="#">Forgot Your Password?</a> -->
         <button type="submit">Sign In</button>
       </form>
     </div>
@@ -141,19 +140,33 @@ const setActive = (isActive) => {
 };
 
 const imageUpload = (event) => {
-  console.log(event.target.files[0]);
-  //pinia에 있는 변수를 바꾸기
-  // 달러 현재발생한 도큐멘트에서 발생한 change 이벤트를가져옴
   store.imgFile = event.target.files[0];
 };
 
+const resetUserIdCheck = () => {
+  isUserIdChecked.value = false;
+  isUserIdAvailable.value = false;
+  userIdCheckMessage.value = "";
+};
+
+const checkUserIdAvailability = async () => {
+  const message = await store.checkUserId(signupUser.value.userId);
+  isUserIdChecked.value = true;
+  if (message === "사용 가능한 아이디입니다.") {
+    isUserIdAvailable.value = true;
+  } else {
+    isUserIdAvailable.value = false;
+  }
+  userIdCheckMessage.value = message;
+};
+
 const handleSignup = () => {
-  console.log("중복 체크 클릭");
   if (isUserIdAvailable.value) {
-    console.log("중복 체크 클릭");
     store.createUser(signupUser.value);
     isSignUpActive.value = false; // 회원가입 완료 후 로그인 폼으로 전환
     emit("hide-buttons");
+  } else {
+    alert("아이디 중복 체크를 해주세요.");
   }
 };
 

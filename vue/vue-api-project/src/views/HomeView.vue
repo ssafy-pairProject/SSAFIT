@@ -2,7 +2,7 @@
   <div class="content">
     <!-- Navbar -->
     <nav>
-      <!-- 프로필 사진 유저 이미지 동적으로 가져오기 -->  
+      <!-- 프로필 사진 유저 이미지 동적으로 가져오기 -->
       <a href="#" class="profile">
         <img :src="profileImage" alt="Profile Image" />
       </a>
@@ -22,20 +22,19 @@
         <li>
           <img src="@/assets/icons/userCount.png" style width="70px" />
           <span class="info">
-            <h3>1,074</h3>
+            <h3>{{ storeStats.userCnt }}</h3>
             <p>With GymSSA</p>
           </span>
         </li>
         <li>
-
-          <img src='@/assets/icons/gym.png' style width="70px">
+          <img src="@/assets/icons/gym.png" style width="70px" />
           <span class="info">
-            <h3>110</h3>
+            <h3>{{ storeStats.gymCnt }}</h3>
             <p>Gyms</p>
           </span>
         </li>
         <li>
-          <img src='@/assets/icons/visitCount.png' style width="70px">
+          <img src="@/assets/icons/visitCount.png" style width="70px" />
           <span class="info">
             <h3>3,944</h3>
             <p>Site Visit</p>
@@ -130,8 +129,13 @@
 <script setup>
 import { computed } from "vue";
 import { useUserStore } from "@/stores/user";
+import { useStatsStore } from "@/stores/stats";
 
 const store = useUserStore();
+const storeStats = useStatsStore();
+
+storeStats.getGymCnt();
+storeStats.getUserCnt();
 
 const currentUserName = computed(() => store.currentUser?.name || "사용자");
 
