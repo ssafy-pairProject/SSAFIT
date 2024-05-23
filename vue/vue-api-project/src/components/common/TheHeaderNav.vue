@@ -8,17 +8,15 @@
           ><i class="bi bi-play-btn-fill"></i>Youtube</RouterLink
         >
         <RouterLink :to="{ name: 'tmap' }"
-          ><i class="bi bi-person-walking"></i>Tmap exercise</RouterLink
+          ><i class="bi bi-person-walking"></i>Tmap Running</RouterLink
         >
         <RouterLink :to="{ name: 'gym' }"
           ><i class="bi bi-list-ul"></i>GymList</RouterLink
         >
         <RouterLink :to="{ name: 'mypage' }"
-          ><i class="bi bi-person-vcard"></i>MyPage</RouterLink
+          ><i class="bi bi-person-vcard"></i>myLikeList</RouterLink
         >
-        {{ isLoggedIn }}
-        ------
-        {{ store.isLogined }}<br />
+
         <!-- {{ test }} -->
         <RouterLink v-if="!isLoggedIn" :to="{ name: 'userLogin' }"
           ><i class="bi bi-person"></i>Login</RouterLink

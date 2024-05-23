@@ -18,7 +18,7 @@
 
 
       </div>
-      <i class="bi bi-signpost"></i>
+     
       <div id="endCSS">
         <label for="endPoint"><h4>도착지</h4></label><br />
         <input
@@ -45,14 +45,8 @@
     
 
 
-    <div>
-      <input type="hidden" id="startlon" v-model="startLon" />
-      <input type="hidden" id="startlat" v-model="startLat" />
-      <input type="hidden" id="endlon" v-model="endLon" />
-      <input type="hidden" id="endlat" v-model="endLat" />
-      <button class="pathresultbutton" @click="displayRoute">경로 표시 </button>
-       <h5  style="display: inline-block;"> 거리 : {{ totalDistance }}km  예상 도착 시간 : {{ Math.floor((totalDistance /6)*60) }} 분</h5> 
-    </div>
+   
+    <h5  style="display: inline-block;"> 거리 : {{ totalDistance }}km <br> 예상 도착 시간 : {{ Math.floor((totalDistance /6)*60) }} 분</h5> 
 
   </div>
 </template>

@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <h2>User View</h2>
-    {{ isLoggedIn }}
+   
+   
     <UserButtons v-if="!isLoggedIn" />
     <!-- <router-view v-else></router-view> -->
     <UserLogout v-if="isLoggedIn" />

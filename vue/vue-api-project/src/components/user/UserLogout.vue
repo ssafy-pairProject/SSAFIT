@@ -1,9 +1,9 @@
 <template>
   <div class="container">
-    <h2>로그아웃</h2>
+   
     <p>정말로 로그아웃 하시겠습니까?</p>
-    <button @click="doLogOut" class="btn btn-primary mt-3">예</button>
-    <button @click="prev" class="btn btn-primary mt-3">아니요</button>
+    <button @click="doLogOut" style="background-color: #512da8;" class="btn btn-primary mt-3">예</button>
+    <button @click="prev" style="background-color: #512da8;" class="btn btn-primary mt-3">아니요</button>
   </div>
 </template>
 
@@ -27,10 +27,11 @@ const prev = () => {
 
 <style scoped>
 .container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
+
+  width: 300px; 
+  height: 100px; 
+  margin: auto; 
+  padding: 20px; 
+  text-align: center; 
 }
 </style>
