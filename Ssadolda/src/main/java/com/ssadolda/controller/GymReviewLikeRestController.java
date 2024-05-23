@@ -35,7 +35,7 @@ import com.ssadolda.service.GymReviewLikeService;
 	        try {
 	        	// 좋아요 이미 눌렀는지 체크
 	            if (gymReviewLikeService.isUserLikedGym(userSeq, gymSeq)) {
-	                return new ResponseEntity<String>("이미 좋아요 눌려있어요", HttpStatus.BAD_REQUEST);
+	                return new ResponseEntity<String>("alreadyLiked",HttpStatus.OK);
 	            }
 	            HashMap<String, Integer> map = new HashMap<>();
 
@@ -62,7 +62,7 @@ import com.ssadolda.service.GymReviewLikeService;
 	        try {
 	        	// 좋아요 눌러져있었는지 체크
 	            if (!gymReviewLikeService.isUserLikedGym(userSeq, gymSeq)) {
-	                return new ResponseEntity<String>("아직 좋아요 안눌렀어요", HttpStatus.BAD_REQUEST);
+	                return new ResponseEntity<String>("notLiked", HttpStatus.OK);
 	            }
 	            HashMap<String, Integer> map = new HashMap<>();
 
@@ -126,6 +126,9 @@ import com.ssadolda.service.GymReviewLikeService;
 	            return exceptionHandling(e);
 	        }
 	    }
+	    
+	    // 유저가 어디 헬스장에 찜했는지 헬스장리스트
+	    // 좋아요 눌렀는지 안눌렀는지 체크 
 
 	    
 

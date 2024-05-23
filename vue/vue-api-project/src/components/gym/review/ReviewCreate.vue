@@ -14,7 +14,7 @@
           :class="{ filled: star <= rating }"
           @click="setRating(star)"
           class="star"
-          >★</span
+          ><i class="bi bi-star-fill"></i></span
         >
       </div>
       <button type="submit" class="submit-button">리뷰등록</button>

@@ -139,10 +139,16 @@ storeStats.getUserCnt();
 
 const currentUserName = computed(() => store.currentUser?.name || "사용자");
 
-const URL = "C:/SSAFIT/vue/vue-api-project/src/assets/userimg";
+const URL = "./src/assets/userimg";
 // C:/SSAFIT/vue/vue-api-project/src/assets/userimg/
 // default.png를 쓰거나 사용자의 파일을 가져다가 놓거나
 // 동적으로 이미지를 가져오는 함수
+const profileImage = computed(() => {
+  const img = store.currentUser?.img || "default.png";
+  console.log(img);
+  return getProfileImage(img);
+});
+
 const getProfileImage = (img) => {
   try {
     return `${URL}/${img}`;
@@ -152,11 +158,7 @@ const getProfileImage = (img) => {
   }
 };
 
-const profileImage = computed(() => {
-  const img = store.currentUser?.img || "default.png";
-  console.log(img);
-  return getProfileImage(img);
-});
+
 </script>
 
 <style scoped>

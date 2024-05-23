@@ -54,4 +54,10 @@ private final GymStatisticsDao gymStatisticsDao;
 	        return dao.existsByUserSeqAndGymSeq(userSeq, gymSeq) > 0;
 	    }
 
+	@Override
+	public List<Integer> likeGymsByUserSeq(int userSeq) {
+		
+		return dao.likeGymsByUserSeq(userSeq);
+	}
+
 }
