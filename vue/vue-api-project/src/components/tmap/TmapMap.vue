@@ -16,7 +16,7 @@
         <button class="pathsearchbutton" @click="searchStartPoint">검색</button>
 
       </div>
-  
+      <i class="bi bi-signpost"></i>
       <div id="endCSS">
         <label for="endPoint"><h4>도착지</h4></label><br />
         <input
@@ -29,23 +29,26 @@
         <button class="pathsearchbutton" @click="searchEndPoint">검색</button>
         <!-- <div>{{ endLon }} {{ endLat }}</div> -->
       </div>
+      <div>
+        <input type="hidden" id="startlon" v-model="startLon" />
+        <input type="hidden" id="startlat" v-model="startLat" />
+        <input type="hidden" id="endlon" v-model="endLon" />
+        <input type="hidden" id="endlat" v-model="endLat" />
+        <button class="pathresultbutton" @click="displayRoute">경로 표시 </button>
+      </div>
     </div>
     
     
     
-    <div>
-      <input type="hidden" id="startlon" v-model="startLon" />
-      <input type="hidden" id="startlat" v-model="startLat" />
-      <input type="hidden" id="endlon" v-model="endLon" />
-      <input type="hidden" id="endlat" v-model="endLat" />
-      <button class="pathresultbutton" @click="displayRoute">경로 표시 </button>
-       <h5  style="display: inline-block;"> 거리 : {{ totalDistance }}km  예상 도착 시간 : {{ Math.floor((totalDistance /6)*60) }} 분</h5> 
-    </div>
+    <h5  style="display: inline-block;"> 거리 : {{ totalDistance }}km  <br>예상 도착 시간 : {{ Math.floor((totalDistance /6)*60) }} 분</h5> 
   </div>
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
+
+import { onMounted, ref,watch,reactive } from "vue";
+
+import gsap from 'gsap'
 import Iconpng from "@/assets/person-running.png";
 
 let map;
@@ -301,8 +304,8 @@ function toRadians(degrees) {
 /* 출발지, 목적지 입력란 스타일 */
 #startCSS,
 #endCSS {
-  margin-bottom: 0px;
-  width : 30%
+ 
+  width: 30%;
 }
 
 /* 텍스트 입력란 스타일 */
@@ -313,6 +316,7 @@ function toRadians(degrees) {
   border: 1px solid #ccc;
   border-radius: 5px;
   font-size: 16px;
+  margin-bottom: 10px;
 }
 
 /* 버튼 스타일 */
@@ -346,16 +350,24 @@ transition: 0.5s;
   border: none;
   cursor: pointer;
   transition: background-color 0.5s ease;
+  position: relative;
+  top: 37.2px;
+  box-shadow: 0 4px 16px rgba(0,79,255,0.3);
+font-size: 16px;
+font-weight: bold;
+border-radius: 20px;
+transition: 0.5s;
+  
 }
 
 .pathresultbutton:hover {
-  background-color: gray; /* Optional: Change color on hover */
+  background-color: rgba(192, 175, 212, 0.895); /* Optional: Change color on hover */
 }
 
 .pathresultbutton:active {
-  background: linear-gradient(to right, black 50%, white 50%);
+  background: linear-gradient(to right, #512da8 50%, white 50%);
   background-size: 200% 100%;
-  color: black; /* Optional: Change text color on click */
+  color: black rgba(116, 199, 200, 0.5); /* Optional: Change text color on click */
   transition: background 0.5s ease;
 }
 
@@ -377,6 +389,8 @@ transition: 0.5s;
   display: inline-block;
   vertical-align: middle;
 }
+
+
 </style>
 
 
