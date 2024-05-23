@@ -1,7 +1,15 @@
 <template>
-  <h3>감사합니다</h3>
+  <h3></h3>
+
 </template>
 
-<script setup></script>
+
+<script setup>
+
+
+
+
+
+</script>
 
 <style scoped></style>

@@ -138,7 +138,6 @@ public class GymBoardRestController {
 		} catch (Exception e) {
 			return exceptionHandling(e);
 		}
-		
 	}
 	
 	//헬스장 상세
