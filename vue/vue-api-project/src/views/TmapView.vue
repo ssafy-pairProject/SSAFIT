@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h2>TmapView</h2>
     <TmapMap />
     <TmapGpt />
   </div>

@@ -5,8 +5,6 @@ import TmapView from "@/views/TmapView.vue";
 import UserView from "@/views/UserView.vue";
 import GymView from "@/views/GymView.vue";
 
-import UserSignup from "@/components/user/UserSignup.vue";
-import UserDetail from "@/components/user/UserDetail.vue";
 import UserLogout from "@/components/user/UserLogout.vue";
 import UserUploadImg from "@/components/user/UserUploadImg.vue";
 
@@ -23,6 +21,8 @@ import ReviewDetail from "@/components/gym/review/ReviewDetail.vue";
 
 import UserButtons from "@/components/user/userButton/UserButtons.vue";
 import MypageView from "@/views/MypageView.vue";
+
+import { useUserStore } from "@/stores/user";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -109,11 +109,6 @@ const router = createRouter({
       component: UserView,
       children: [
         {
-          path: "signup",
-          name: "userSignup",
-          component: UserSignup,
-        },
-        {
           path: "login",
           name: "userLogin",
           component: UserButtons,
@@ -133,6 +128,21 @@ const router = createRouter({
       ],
     },
   ],
+});
+
+// 네비게이션 가드 추가
+router.beforeEach((to, from, next) => {
+  const store = useUserStore();
+  const publicPages = ["home", "userLogin", "userSignup"]; // 로그인 체크 제외 페이지
+  const authRequired = !publicPages.includes(to.name);
+
+  if (authRequired && !store.isLogined) {
+    // 로그인되지 않은 경우 로그인 페이지로 리다이렉트
+    alert("로그인 후 이용 가능합니다!");
+    next({ name: "userLogin" });
+  } else {
+    next();
+  }
 });
 
 export default router;

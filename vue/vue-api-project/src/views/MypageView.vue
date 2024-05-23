@@ -1,14 +1,29 @@
 <template>
-  <div>
-    여기에 구현할 내용은 usertype을 보고 회원인지 관장인지 먼저 확인하고 나서
-    자동으로 관장, 회원에 따라서 마이페이지를 다르게 구성하기
+  <div class="mypage-container">
+    <h1>My Page</h1>
+    <div class="user-info-section">
+      <h2>User Information</h2>
+      <UserDetail />
+    </div>
+    <div class="liked-gyms-section">
+      <h2>Liked Gyms</h2>
+      <UserLikedGymTable />
+    </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
-import { useRouter } from "vue-router"; // 라우터 사용
-import UserButtons from "@/components/user/userButton/UserButtons.vue";
+import UserDetail from "@/components/user/UserDetail.vue";
+import UserLikedGymTable from "@/components/user/UserLikedGymTable.vue";
 </script>
 
-<style scoped></style>
+<style scoped>
+.mypage-container {
+  padding: 20px;
+}
+
+.user-info-section,
+.liked-gyms-section {
+  margin-bottom: 20px;
+}
+</style>

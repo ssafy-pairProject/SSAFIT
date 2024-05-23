@@ -13,9 +13,13 @@ export const useGymStore = defineStore("gym", () => {
     });
 
     var formData = new FormData();
-
     formData.append("gym", gymToBlob);
     formData.append("gymImg", gymImg.value);
+
+    // 전송 데이터 확인
+    formData.forEach((value, key) => {
+      console.log(`${key}: ${value}`); // 변경된 부분: 전송 데이터 확인을 위해 로그 출력
+    });
 
     axios
       .post(`${REST_GYM_API}/regist`, formData, {
@@ -27,7 +31,10 @@ export const useGymStore = defineStore("gym", () => {
         router.push({ name: "gymList" });
       })
       .catch((err) => {
-        console.log(err);
+        console.error(
+          "Error in createGym:",
+          err.response ? err.response.data : err.message
+        ); // 변경된 부분: 오류 메시지 자세히 출력
       });
   };
 
