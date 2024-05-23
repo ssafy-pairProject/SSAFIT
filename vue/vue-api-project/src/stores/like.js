@@ -16,6 +16,7 @@ export const useLikeStore = defineStore("like", () => {
       if (Array.isArray(response.data)) {
         likes.value = response.data.map((gym) => gym.gymSeq);
       } else {
+        console.log;
         console.error("Error fetching likes: response.data is not an array");
         likes.value = [];
       }

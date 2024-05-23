@@ -36,9 +36,9 @@ tml 코드 복사
           <p class="card-text">
             <strong>추가 서비스:</strong> {{ gym.gymAdditionalService }}
           </p>
-          <p class="card-text">
+          <!-- <p class="card-text">
             <strong>좋아요:</strong> {{ gym.userLikedCnt }}
-          </p>
+          </p> -->
           <div>
             <!-- 운동 사진 유저 이미지 동적으로 가져오기 -->
             <!-- 사진배치랑 크기 수정 부탁드려요 -->
@@ -127,6 +127,9 @@ body {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+}
+.card-body {
+  text-decoration: none;
 }
 
 .card {

@@ -2,22 +2,20 @@
   <div id="container">
     <header>
       <nav>
-        <RouterLink to="/"><i class="bi bi-house-fill"></i>Home</RouterLink
-        ><img src="" alt="" />
+        <RouterLink to="/"><i class="bi bi-house-fill"></i>Home</RouterLink>
+        <img src="" alt="" />
         <RouterLink to="/youtube"
           ><i class="bi bi-play-btn-fill"></i>Youtube</RouterLink
         >
         <RouterLink :to="{ name: 'tmap' }"
           ><i class="bi bi-person-walking"></i>Tmap Running</RouterLink
         >
-        <RouterLink :to="{ name: 'gym' }"
+        <RouterLink :to="{ name: 'gymList' }"
           ><i class="bi bi-list-ul"></i>GymList</RouterLink
         >
         <RouterLink :to="{ name: 'mypage' }"
           ><i class="bi bi-person-vcard"></i>myLikeList</RouterLink
         >
-
-        <!-- {{ test }} -->
         <RouterLink v-if="!isLoggedIn" :to="{ name: 'userLogin' }"
           ><i class="bi bi-person"></i>Login</RouterLink
         >
@@ -30,18 +28,18 @@
 </template>
 
 <script setup>
-import { computed } from "vue";
+import { computed, onMounted } from "vue";
 import { useUserStore } from "@/stores/user";
 
 const store = useUserStore();
 
-// const isLoggedIn = computed(() => {
-//   return store.isLogined;
-// });
+// 로그인 상태를 computed 속성으로 설정
+const isLoggedIn = computed(() => store.isLogined);
 
-let isLoggedIn = sessionStorage.getItem("access-token") != null;
-isLoggedIn = computed(() => {
-  return store.isLogined;
+onMounted(() => {
+  store.updateLoginState();
+  console.log("onmounted");
+  console.log(isLoggedIn.value);
 });
 </script>
 
@@ -49,7 +47,6 @@ isLoggedIn = computed(() => {
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 #container {
   font-family: "Montserrat", sans-serif;
-
   display: flex;
 }
 
