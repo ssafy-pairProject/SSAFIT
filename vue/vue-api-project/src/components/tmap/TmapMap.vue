@@ -13,7 +13,9 @@
           placeholder="검색어를 입력해주세요"
           v-model="startPoint"
         />
+
         <button class="pathsearchbutton" @click="searchStartPoint">검색</button>
+
 
       </div>
   
@@ -26,6 +28,7 @@
           placeholder="검색어를 입력해주세요"
           v-model="endPoint"
         />
+
         <button class="pathsearchbutton" @click="searchEndPoint">검색</button>
         <!-- <div>{{ endLon }} {{ endLat }}</div> -->
       </div>
@@ -33,6 +36,7 @@
     
     
     
+
     <div>
       <input type="hidden" id="startlon" v-model="startLon" />
       <input type="hidden" id="startlat" v-model="startLat" />
@@ -316,6 +320,7 @@ function toRadians(degrees) {
 }
 
 /* 버튼 스타일 */
+
 .pathsearchbutton{
 width : 120px;
 height:40px;
@@ -358,6 +363,12 @@ transition: 0.5s;
   color: black; /* Optional: Change text color on click */
   transition: background 0.5s ease;
 }
+
+
+
+
+
+
 
 .pathresultbutton:active p {
   color: white; /* Optional: Change text color on click */
