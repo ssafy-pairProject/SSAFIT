@@ -1,12 +1,11 @@
 <template>
   <div class="mypage-container">
-    <h1>My Page</h1>
-    <div class="user-info-section">
+    <!-- <div class="user-info-section">
       <h2>User Information</h2>
       <UserDetail />
-    </div>
+    </div> -->
     <div class="liked-gyms-section">
-      <h2>Liked Gyms</h2>
+      <h1>찜한 헬스장</h1>
       <UserLikedGymTable />
     </div>
   </div>

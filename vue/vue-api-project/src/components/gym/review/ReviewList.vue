@@ -20,7 +20,7 @@
           <td>{{ index + 1 + (currentPage - 1) * perPage }}</td>
           <td>{{ review.comment }}</td>
           <td>{{ review.rating }}점</td>
-          <td>{{ review.userSeq }}</td>
+          <td>해찬</td>
           <td>{{ review.reviewDate }}</td>
           <td><button @click="handleDelete(review.reviewSeq)">삭제</button></td>
         </tr>
@@ -104,8 +104,8 @@ const handleDelete = async (reviewSeq) => {
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&family=Noto+Serif+KR:wght@200..900&display=swap');
-*{
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&family=Noto+Serif+KR:wght@200..900&display=swap");
+* {
   font-family: "Noto Sans KR", sans-serif;
 }
 .container {

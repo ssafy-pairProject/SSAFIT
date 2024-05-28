@@ -1,13 +1,6 @@
-tml 코드 복사
 <template>
+  <RouterLink to="/gym/regist" class="pathsearchbutton"> 등록</RouterLink>
   <div class="container">
-    <div class="row my-2">
-      <div class="col-12 d-flex justify-content-end">
-        <RouterLink to="/gym/regist" class="btn btn-primary"
-          >헬스장 등록</RouterLink
-        >
-      </div>
-    </div>
     <div class="row">
       <div
         v-for="(gym, index) in gymList"
@@ -16,38 +9,25 @@ tml 코드 복사
       >
         <RouterLink
           :to="{ name: 'gymDetail', params: { gymSeq: gym.gymSeq } }"
-          class="card-body"
+          class="card-body d-flex"
         >
-          <h5 class="card-title">{{ gym.gymName }}</h5>
-          <p class="card-text"><strong>주소:</strong> {{ gym.gymAddress }}</p>
-          <p class="card-text">
-            <strong>전화번호:</strong> {{ gym.gymPhoneNumber }}
-          </p>
-          <p class="card-text"><strong>가격(원):</strong> {{ gym.gymPrice }}</p>
-          <p class="card-text">
-            <strong>헬스장 소개:</strong> {{ gym.gymIntroduce }}
-          </p>
-          <p class="card-text">
-            <strong>영업시간:</strong> {{ gym.gymOperatingHours }}
-          </p>
-          <p class="card-text">
-            <strong>부가 시설:</strong> {{ gym.gymAmenities }}
-          </p>
-          <p class="card-text">
-            <strong>추가 서비스:</strong> {{ gym.gymAdditionalService }}
-          </p>
-          <!-- <p class="card-text">
-            <strong>좋아요:</strong> {{ gym.userLikedCnt }}
-          </p> -->
-          <div>
-            <!-- 운동 사진 유저 이미지 동적으로 가져오기 -->
-            <!-- 사진배치랑 크기 수정 부탁드려요 -->
-            <a href="#" class="profile">
-              <img :src="getGymImage(gym.gymImg)" alt="Gym Image" />
-            </a>
+          <div class="card-content">
+            <h5 class="card-title">{{ gym.gymName }}</h5>
+            <p class="card-text"><strong>주소:</strong> {{ gym.gymAddress }}</p>
+            <p class="card-text">
+              <strong>전화번호:</strong> {{ gym.gymPhoneNumber }}
+            </p>
+            <p class="card-text">
+              <strong>가격(원):</strong> {{ gym.gymPrice }}
+            </p>
+            <p class="card-text">
+              <strong>영업시간:</strong> {{ gym.gymOperatingHours }}
+            </p>
+          </div>
+          <div class="card-image">
+            <img :src="getGymImage(gym.gymImg)" alt="Gym Image" />
           </div>
         </RouterLink>
-        <!-- npm install --save @fortawesome/fontawesome-free -->
         <span class="heart-icon" @click.prevent="toggleLike(gym)">
           <i v-if="gym.userLiked" class="fas fa-heart"></i>
           <i v-else class="far fa-heart"></i>
@@ -74,7 +54,7 @@ const getGymImage = (img) => {
   try {
     return `${URL}/${img}`;
   } catch (e) {
-    console.err(e);
+    console.error(e);
     return `${URL}/gym-default.png`;
   }
 };
@@ -99,7 +79,6 @@ const toggleLike = async (gym) => {
   }
   gym.userLiked = !gym.userLiked;
   gym.userLikeCnt += gym.userLiked ? 1 : -1;
-  // 서버에 업데이트를 보내는 코드 추가 가능
 };
 </script>
 
@@ -114,12 +93,34 @@ body {
   justify-content: center;
   align-items: center;
 }
+.pathsearchbutton {
+  display: inline-block;
+  width: 150px; /* 버튼의 너비를 조절합니다 */
+  height: 50px; /* 버튼의 높이를 조절합니다 */
+  margin-bottom: 20px;
+  background-color: #b72929;
+  border: none;
+  color: white;
+  box-shadow: 0 4px 16px rgba(0, 79, 255, 0.3);
+  font-size: 16px;
+  font-weight: bold;
+  transition: 0.5s;
+  text-decoration: none;
+  text-align: center;
+  line-height: 50px; /* 버튼의 높이에 맞춰 텍스트를 가운데 정렬합니다 */
+}
+.pathsearchbutton:focus {
+  outline: 0;
+}
+.pathsearchbutton:hover {
+  background-color: rgba(192, 175, 212, 0.895);
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 79, 255, 0.6);
+}
 
 .container {
   display: flex;
-  justify-content: center;
   flex-wrap: wrap;
-  padding: 2rem 0;
   width: 100%;
 }
 
@@ -127,9 +128,6 @@ body {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-}
-.card-body {
-  text-decoration: none;
 }
 
 .card {
@@ -140,24 +138,38 @@ body {
   border-radius: 10px;
   transition: box-shadow 0.3s ease;
   text-decoration: none;
-  /* background: linear-gradient(to right, #fff, #512da8); */
   overflow: hidden;
 }
 
 .card:hover {
-  box-shadow: rgba(240, 46, 170, 0.4) 5px 5px, rgba(240, 46, 170, 0.3) 10px 10px,
-    rgba(240, 46, 170, 0.2) 15px 15px, rgba(240, 46, 170, 0.1) 20px 20px,
-    rgba(240, 46, 170, 0.05) 25px 25px;
+  box-shadow: rgba(139, 22, 202, 0.4) 5px 5px, rgba(122, 74, 144, 0.3) 10px 10px,
+    rgba(102, 21, 142, 0.28) 15px 15px, rgba(240, 46, 170, 0.1) 20px 20px,
+    rgba(47, 158, 17, 0.05) 25px 25px;
 }
 
 .card-body {
-  width: calc(100% - 26px);
-  display: grid;
-  cursor: pointer;
-  font-family: "Montserrat", sans-serif;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  margin: 8px 13px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-decoration: none;
+  padding: 16px;
+}
+
+.card-content {
+  flex: 1;
+}
+
+.card-image {
+  width: 150px;
+  height: 150px;
+  margin-left: 20px;
+}
+
+.card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
 }
 
 .card-title {
