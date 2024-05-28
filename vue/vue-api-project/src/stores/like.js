@@ -1,28 +1,26 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
 import axios from "axios";
-
+import router from "@/router";
 export const useLikeStore = defineStore("like", () => {
   const likes = ref([]);
   const likeCount = ref(0);
 
-  const fetchLikes = async (userSeq) => {
-    try {
-      const response = await axios.get(`/gymlike/reviewlist/${userSeq}`);
-      // 서버 응답 데이터를 로그로 출력
-      console.log("Server response data:", response.data);
-
-      // response.data가 배열인지 확인하고 배열일 경우 처리
-      if (Array.isArray(response.data)) {
-        likes.value = response.data.map((gym) => gym.gymSeq);
-      } else {
-        console.log;
-        console.error("Error fetching likes: response.data is not an array");
-        likes.value = [];
-      }
-    } catch (error) {
-      console.error("Error fetching likes:", error);
-    }
+  const fetchLikes = function () {
+    axios
+      .get(`/gymlike/reviewlist/6`, {
+        headers: {
+          "access-token": sessionStorage.getItem("access-token"),
+        },
+      })
+      .then((response) => {
+        likes.value = response.data;
+        // return likes.value; // 배열 반환
+      })
+      .catch((err) => {
+        console.log(err);
+        // return []; // 오류 발생 시 빈 배열 반환
+      });
   };
 
   const checkIfLiked = (gymSeq) => {

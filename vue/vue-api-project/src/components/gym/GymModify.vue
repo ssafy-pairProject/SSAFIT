@@ -2,7 +2,7 @@
   <div class="container">
     <h4>헬스장 수정</h4>
     <form @submit.prevent="updateGym">
-      <div class="form-floating mb-3">
+      <div class="mb-3">
         <label for="gymName" class="form-label">헬스장 이름</label>
         <input
           type="text"
@@ -12,7 +12,7 @@
           required
         />
       </div>
-      <div class="form-floating mb-3">
+      <div class="mb-3">
         <label for="gymAddress" class="form-label">주소</label>
         <input
           type="text"
@@ -22,7 +22,7 @@
           required
         />
       </div>
-      <div class="form-floating mb-3">
+      <div class="mb-3">
         <label for="gymPhoneNumber" class="form-label">전화번호</label>
         <input
           type="text"
@@ -32,7 +32,7 @@
           required
         />
       </div>
-      <div class="form-floating mb-3">
+      <div class="mb-3">
         <label for="gymPrice" class="form-label">가격</label>
         <input
           type="text"
@@ -42,7 +42,7 @@
           required
         />
       </div>
-      <div class="form-floating mb-3">
+      <div class="mb-3">
         <label for="gymIntroduce" class="form-label">소개</label>
         <textarea
           type="text"
@@ -52,7 +52,7 @@
           required
         />
       </div>
-      <div class="form-floating mb-3">
+      <div class="mb-3">
         <label for="gymOperatingHours" class="form-label">운영 시간</label>
         <input
           type="text"
@@ -62,7 +62,7 @@
           required
         />
       </div>
-      <div class="form-floating mb-3">
+      <div class="mb-3">
         <label for="gymAmenities" class="form-label">어메니티</label>
         <input
           type="text"
@@ -72,7 +72,7 @@
           required
         />
       </div>
-      <div class="form-floating mb-3">
+      <div class="mb-3">
         <label for="gymAdditionalService" class="form-label">추가 서비스</label>
         <input
           type="text"
@@ -112,5 +112,5 @@ const updateGym = () => {
 </script>
 
 <style scoped>
-/* 스타일링 추가 가능 */
+/* Add any additional styling if needed */
 </style>

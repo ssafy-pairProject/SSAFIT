@@ -16,38 +16,46 @@
           <h1>Info Graphic</h1>
         </div>
       </div>
-      <!-- C:\SSAFIT\vue\vue-api-project\src\assets\userimg\default.png -->
       <!-- Insights -->
-      <ul class="insights" >
-        <li >
-          <img src="@/assets/icons/userCount.png" style width="70px" />
+      <ul class="insights">
+        <li>
+          <img src="@/assets/icons/userCount.png" style="width: 70px" />
           <span class="info">
             <h3>"{{ storeStats.userCnt }}" User</h3>
             <p>With GymSSA</p>
           </span>
         </li>
         <li>
-          <img src="@/assets/icons/gym.png" style width="70px" />
+          <img src="@/assets/icons/gym.png" style="width: 70px" />
           <span class="info">
             <h3>{{ storeStats.gymCnt }}</h3>
             <p>Gyms</p>
           </span>
         </li>
- 
         <li>
-          <img src="@/assets/icons/clock.png" style width="70px" />
+          <img src="@/assets/icons/clock.png" style="width: 70px" />
           <span class="info">
             <h3>{{ currentTime }}</h3>
-            
           </span>
         </li>
-        <li> 
-          
-          <WeatherForecast />
+        <li>
+          <img src="@/assets/icons/cloudy.png" style="width: 70px" />
+          <span class="info">
+            <WeatherForecast />
+          </span>
         </li>
-   
-       
       </ul>
+      <pre>
+국내 1등 피트니스 O2O 서비스 짐싸는 거주지와 활동지가 다른
+현대인들에게 편하고 즐거운 운동경험을 제공하기 위해 탄생했습니다.<br>
+헬스장을 발품팔아 알아보기에는 시간도 없고 불편하다는 작은 불평은 모든
+실내체육시설 최저가를 100% 공개하는 다짐 정책의 근본이 되었고, 장소의
+제약없이 헬스장을 다니고 싶다는 누군가의 작은 소망은 최대 3개의
+운동시설을 장소와 종목에 관계없이 하나 가격에 이용할 수 있는
+통합회원권의 씨앗이 되었습니다. <br>
+
+
+      </pre>
     </main>
   </div>
 </template>
@@ -124,10 +132,6 @@ onMounted(() => {
   font-family: "Poppins", sans-serif;
 }
 
-.bx {
-  font-size: 1.7rem;
-}
-
 a {
   text-decoration: none;
 }
@@ -160,40 +164,22 @@ body {
 
 .content nav {
   height: 56px;
-  background: var(--light);
-  padding: 0 24px 0 0;
+  background: var(--primary);
+  padding: 0 24px;
   display: flex;
   align-items: center;
-  grid-gap: 24px;
-  position: sticky;
-  top: 0;
-  left: 0;
-  z-index: 1000;
-}
-
-.content nav::before {
-  content: "";
-  position: absolute;
-  width: 40px;
-  height: 40px;
-  bottom: -40px;
-  left: 0;
-  border-radius: 50%;
-  box-shadow: -20px -20px 0 var(--light);
+  justify-content: space-between;
+  color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .content nav a {
-  color: var(--dark);
-}
-
-.content nav .bx.bx-menu {
-  cursor: pointer;
-  color: var(--dark);
+  color: white;
 }
 
 .content nav .profile img {
-  width: 90px;
-  height: 90px;
+  width: 60px;
+  height: 60px;
   object-fit: cover;
   border-radius: 50%;
 }
@@ -216,7 +202,7 @@ body {
 
 .content main .header .left h1 {
   font-size: 2rem;
-  font-weight: 700; 
+  font-weight: 700;
   color: var(--dark);
 }
 
@@ -267,8 +253,22 @@ body {
 .content main .insights li .info h3 {
   font-size: 1.5rem;
 }
+
 .content main .insights li .info p {
   font-size: 1.5rem;
 }
 
+/* Pre Tag Style */
+pre {
+  background: var(--light);
+  border-radius: 8px;
+  padding: 20px;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--dark);
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  margin-top: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
 </style>

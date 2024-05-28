@@ -6,6 +6,22 @@ import router from "@/router";
 const REST_GYM_API = `http://localhost:8080/gym`;
 
 export const useGymStore = defineStore("gym", () => {
+  const gymList = ref([]);
+  const getGymList = function () {
+    axios
+      .get(`${REST_GYM_API}/list`, {
+        headers: {
+          "access-token": sessionStorage.getItem("access-token"),
+        },
+      })
+      .then((response) => {
+        gymList.value = response.data;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const gymImg = ref(null);
   const createGym = function (gym) {
     const gymToBlob = new Blob([JSON.stringify(gym)], {
@@ -35,22 +51,6 @@ export const useGymStore = defineStore("gym", () => {
           "Error in createGym:",
           err.response ? err.response.data : err.message
         ); // 변경된 부분: 오류 메시지 자세히 출력
-      });
-  };
-
-  const gymList = ref([]);
-  const getGymList = function () {
-    axios
-      .get(`${REST_GYM_API}/list`, {
-        headers: {
-          "access-token": sessionStorage.getItem("access-token"),
-        },
-      })
-      .then((response) => {
-        gymList.value = response.data;
-      })
-      .catch((err) => {
-        console.log(err);
       });
   };
 
